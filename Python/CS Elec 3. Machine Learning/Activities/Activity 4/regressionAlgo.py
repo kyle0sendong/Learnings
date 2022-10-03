@@ -27,7 +27,7 @@ from sklearn import linear_model                              #for model we want
 from sklearn.model_selection import train_test_split        #splitting training and testing sets
 
 
-insurance = pd.read_csv("insurance.csv")
+insurance = pd.read_csv("Python\csv_files\insurance.csv")
 
 # pandas.loc[] returns Series object
 # I can use DataFrame.values() as an alternative as it returns NumPy Array object
@@ -37,8 +37,7 @@ y = insurance.loc[ : , "bmi"]
 x = np.array(x)
 y = np.array(y)
 
-
-
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 1/3, random_state = 39)
 
 # First Regression Algorithm used. Algorithm taken from the Class Powerpoint.
 # Very simple regression algorithm
@@ -56,6 +55,7 @@ def get_slope_y_intercept(x, y):
 
 def regression_algorithm(x, slope, y_intercept):
     predictor = []
+    
     for i in x:
         calculation = slope*(i) + y_intercept
         predictor.append(calculation)
@@ -64,17 +64,18 @@ def regression_algorithm(x, slope, y_intercept):
     
     return predictor
   
-slope, y_intercept = get_slope_y_intercept(x, y)
-linear_regression_predictor = regression_algorithm(x, slope, y_intercept)
+slope, y_intercept = get_slope_y_intercept(x_train, y_train)
+linear_regression_predictor = regression_algorithm(x_test, slope, y_intercept)
 
 plt.figure(1)
-plt.scatter(x,
-            y,
+plt.scatter(x_test,
+            y_test,
             edgecolor = "b",
             linewidth = 0.5)
-plt.plot(x,
+plt.plot(x_test,
          linear_regression_predictor, 
          color = "g") # plotting the regression line
+
 
 plt.xlabel("Age")
 plt.ylabel('BMI')
@@ -102,7 +103,7 @@ plt.show()
 # @test_size are the splitting of the dataset
 # @random_state takes integer 0-42. Idea is similar to seeding in RNGs
 # @returns an array with the length of (array length * 2) each for train and test set of the input
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 1/3, random_state = 39)
+
 
 # Reshaping array to convert from 1D to 2D array for the model fitting
 x_test = x_test.reshape(-1,1) 

@@ -15,8 +15,7 @@ import numpy as np
 import matplotlib.pyplot as plot
 
 
-insurance = pd.DataFrame(pd.read_csv('insurance.csv'))
-
+insurance = pd.DataFrame(pd.read_csv('Python\csv_files\insurance.csv'))
 
 plot.figure(1)
 age = pd.to_numeric(insurance["age"])
