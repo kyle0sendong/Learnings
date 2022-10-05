@@ -25,9 +25,10 @@ import numpy as np                                             #for using data a
 import matplotlib.pyplot as plt                                 #for plotting graph of x,y
 from sklearn import linear_model                              #for model we want to predict by
 from sklearn.model_selection import train_test_split        #splitting training and testing sets
+import sys
+np.set_printoptions(threshold=sys.maxsize)
 
-
-insurance = pd.read_csv("Python\csv_files\insurance.csv")
+insurance = pd.read_csv("insurance.csv")
 
 # pandas.loc[] returns Series object
 # I can use DataFrame.values() as an alternative as it returns NumPy Array object
@@ -36,32 +37,51 @@ x = insurance.loc[ : , "age"]
 y = insurance.loc[ : , "bmi"]
 x = np.array(x)
 y = np.array(y)
-
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 1/3, random_state = 39)
 
 # First Regression Algorithm used. Algorithm taken from the Class Powerpoint.
 # Very simple regression algorithm
-def get_slope_y_intercept(x, y):
-    sum_x = sum(x)
-    x_mean = np.mean(x)
-    sum_y = sum(y)
+def get_y_intercept(slope, x, y):
+    y_intercept = 0
     y_mean = np.mean(y)
-    
-    slope = ((sum_x - x_mean) * (sum_y - y_mean)) / ((sum_x - x_mean) * (sum_x - x_mean))
-    
-    y_intercept = y_mean - (slope * x_mean)
 
+    if len(x.shape) > 1:
+        mx = 0
+        for i in range(len(x)):
+            x_mean = np.mean(x[i])
+            mx += (slope[i] * x_mean)
+            
+        y_intercept = y_mean - mx
+    else:
+        x_mean = np.mean(x)
+        y_intercept = y_mean - (slope * x_mean)
+        
+    return y_intercept
+
+def get_slope(x, y):
+    x_mean = np.mean(x)
+    y_mean = np.mean(y)
+    numerator = 0
+    denominator = 0
+    for i in range(len(x)):
+        numerator += (x[i] - x_mean) * (y[i] - y_mean)
+        denominator += ((x[i] - x_mean) ** 2)
+    
+    slope = numerator/denominator
+    return slope
+
+def get_slope_y_intercept(x, y):
+    slope = get_slope(x, y)
+    y_intercept = get_y_intercept(slope, x, y)
     return slope, y_intercept
 
 def regression_algorithm(x, slope, y_intercept):
     predictor = []
-    
     for i in x:
         calculation = slope*(i) + y_intercept
         predictor.append(calculation)
     
     predictor = np.array(predictor)
-    
     return predictor
   
 slope, y_intercept = get_slope_y_intercept(x_train, y_train)
@@ -72,11 +92,11 @@ plt.scatter(x_test,
             y_test,
             edgecolor = "b",
             linewidth = 0.5)
+
 plt.plot(x_test,
          linear_regression_predictor, 
          color = "g") # plotting the regression line
-
-
+      
 plt.xlabel("Age")
 plt.ylabel('BMI')
 plt.title("Regression Algorithm (1) from (Class Powerpoint)\nNo Splitting")
@@ -185,3 +205,20 @@ plot_regression_line(x, y, b)
 
 # I have also learned that in python, when defining function and variables, 
 # the names must be in using the all lowercase separated by underscore. https://peps.python.org/pep-0008/
+    
+# def get_slope_y_intercept(x, y):
+#     sum_x = sum(x)
+#     x_mean = np.mean(x)
+#     sum_y = sum(y)
+#     y_mean = np.mean(y)
+#     numerator = 0
+#     denominator = 0
+#     for i in range(len(x)):
+#         numerator += (x[i] - x_mean) * (y[i] - y_mean)
+#         denominator += (x - x_mean) ** 2
+    
+#     slope = numerator / denominator
+    
+#     y_intercept = y_mean - (slope * x_mean)
+
+#     return slope, y_intercept
