@@ -41,20 +41,13 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 1/3, rando
 
 # First Regression Algorithm used. Algorithm taken from the Class Powerpoint.
 # Very simple regression algorithm
+
 def get_y_intercept(slope, x, y):
     y_intercept = 0
     y_mean = np.mean(y)
 
-    if len(x.shape) > 1:
-        mx = 0
-        for i in range(len(x)):
-            x_mean = np.mean(x[i])
-            mx += (slope[i] * x_mean)
-            
-        y_intercept = y_mean - mx
-    else:
-        x_mean = np.mean(x)
-        y_intercept = y_mean - (slope * x_mean)
+    x_mean = np.mean(x)
+    y_intercept = y_mean - (slope * x_mean)
         
     return y_intercept
 
@@ -63,6 +56,7 @@ def get_slope(x, y):
     y_mean = np.mean(y)
     numerator = 0
     denominator = 0
+
     for i in range(len(x)):
         numerator += (x[i] - x_mean) * (y[i] - y_mean)
         denominator += ((x[i] - x_mean) ** 2)

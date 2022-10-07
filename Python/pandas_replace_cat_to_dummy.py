@@ -12,16 +12,16 @@ dummies = pd.get_dummies(df.smoker)
 merged = pd.concat([df, dummies], axis='columns')
  
 # drop the values
-df = merged.drop(['no', 'smoker'], axis='columns')
+# df = merged.drop(['no', 'smoker'], axis='columns')
  
 # print the dataframe
-print(df)
+print(merged)
 
 
 
-## Using DataFrame.replace() method
-df['region'].replace(['southeast', 'southwest',
-                      'northeast', 'northwest'],
-                        [0, 1, 2, 3], inplace=True)
+# ## Using DataFrame.replace() method
+# df['region'].replace(['southeast', 'southwest',
+#                       'northeast', 'northwest'],
+#                         [0, 1, 2, 3], inplace=True)
 
-print(df)
+# print(df)

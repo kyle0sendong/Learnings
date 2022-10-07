@@ -14,62 +14,64 @@
 # =============================================================================
 
 
-#to do tomorrow - convert to int first using bin and convert to numerical
 #multivariate algorithm
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-import sys
-np.set_printoptions(threshold=sys.maxsize)
+from sklearn.metrics import r2_score
 import seaborn as sns
-#get multiple slopes m1 m2 m3 m4 using slope formula 
-#after getting slopes of each variable, using mean of x and y and slope, get the y intercept 
-#to make a predictor, use the formula y = m1x1 + m2x2 ... mnxn + b
+import random
+#number seed for the random number generator used in splitting of dataset
+rngesus = random.randrange(0, 42) 
 
+# get_y_intercept(slope, x, y)) computes for the y - intercept of x and y
 def get_y_intercept(slope, x, y):
     y_intercept = 0
     y_mean = np.mean(y)
+    mx = 0
+    
+    for i in range(len(x.columns)):
+        x_mean = np.mean(x.iloc[:, i])
+        mx += (slope[i] * x_mean)
 
-    if len(x.shape) > 1:
-        mx = 0
-        for i in range(len(x)):
-            x_mean = np.mean(x[i])
-            mx += (slope[i] * x_mean)
-            
-        y_intercept = y_mean - mx
-    else:
-        x_mean = np.mean(x)
-        y_intercept = y_mean - (slope * x_mean)
-        
+    y_intercept =  y_mean - mx
     return y_intercept
 
+# get_slope() computes the slope of x and y
 def get_slope(x, y):
     x_mean = np.mean(x)
     y_mean = np.mean(y)
     numerator = 0
     denominator = 0
-
+    
     for i in range(len(x)):
-        numerator += (x[i] - x_mean) * (y[i] - y_mean)
-        denominator += ((x[i] - x_mean) ** 2)
+        x_temp = x.iloc[i]
+        y_temp = y.iloc[i]
+        numerator += (x_temp - x_mean) * (y_temp - y_mean)
+        denominator += (x_temp - x_mean) ** 2
     
     slope = numerator/denominator
+    if slope < 0:
+        slope = 0
     return slope
 
-def get_slope_y_intercept(x, y):
-    slope = get_slope(x, y)
-    y_intercept = get_y_intercept(slope, x, y)
-    return slope, y_intercept
-    
+
+# multivariate_regression() Uses formula = y = (m1x1 + m2x2 ... mNxN) + b
+# Uses for loop for iterating every element in every column.
+# @x - DataFrame, 
+# @slope - slope of every independent variable, 
+# @y_intercept taken from formula y = mx + b
+# @returns the Multivariate Linear Regression model. 
 def multivariate_regression(x, slope, y_intercept):
     predictor = []
-    
-    for i in range(len(x[0])):
+
+    for i in range(len(x)): 
         mx = 0
-        for j in range(len(x)):  #m1x1 + m2x2 ... mnxn
-            mx += slope * x[j, i]
+        for j in range(len(x.columns)):  #m1x1 + m2x2 ... mnxn
+            x_temp = x.iloc[i, j]
+            mx += slope[j] * x_temp
             
         calculation = mx + y_intercept
         predictor.append(calculation)
@@ -77,64 +79,126 @@ def multivariate_regression(x, slope, y_intercept):
     predictor = np.array(predictor)
     return predictor
 
+# main() contains necessary code for running the algorithm presented from the class powerpoint
 def main(): 
-    insurance = pd.DataFrame(pd.read_csv('insurance.csv')).sample(frac=0.3,random_state=69)
-
-    # Converting category variable to numeric variable using DataFrame.replace()
-    insurance['sex'].replace(to_replace = ['male', 'female'],
-                             value = [0, 1],
-                             inplace = True)
-    
-    insurance['smoker'].replace(to_replace = ['yes', 'no'],
-                                value = [0, 1],
-                                inplace = True)
-    
-    insurance['region'].replace(to_replace = ['northeast', 'northwest', 'southeast', 'southwest'],
-                                value = [0, 1, 2, 3],
-                                inplace = True)
-
-    insurance = insurance.astype({'sex':'int64', 'smoker':'int64', 'region':'int64'})
-    x = (np.array(insurance['age']), insurance['sex'], insurance['bmi'], insurance['children'], insurance['smoker'])
+    insurance = pd.DataFrame(pd.read_csv('insurance.csv'))
+    x = insurance.loc[ : , :'region']
     y = insurance.loc[ : , 'charges']
-    x = np.array(x)
-    y = np.array(y)
     
-    m = []
-    for i in range (len(x)):
-        slope = get_slope(x[i], y)
-        m.append(slope)
+    #Preprocessing - converting to categorical data to numeric type using pandas.get_dummies.
+    #I have tried using DataFrame.replace() to literally convert 0, 1, 2 values but it only gave inaccurate results
+    dummy1 = pd.get_dummies(insurance['sex'])
+    dummy2 = pd.get_dummies(insurance['smoker'])
+    dummy3 = pd.get_dummies(insurance['region'])
+    x = pd.concat([x, dummy1], axis='columns')
+    x = pd.concat([x, dummy2], axis='columns')
+    x = pd.concat([x, dummy3], axis='columns')
+    x = x.drop(['sex', 'smoker', 'region'], axis='columns') #drop the categorical variable
     
-    b = get_y_intercept(m, x, y)
-    predictor = multivariate_regression(x, slope, b)
+    # Splitting of dataset into training and testing dataset
+    x_train,x_test,y_train,y_test=train_test_split(x, y, test_size=0.3, random_state=rngesus)   
     
-    plt.scatter(y,
-                predictor,
-                edgecolor = 'b',
-                linewidth = 0.5)
+    # Computing for the slope of every column. Used in getting the y_intercept and the linear regression model
+    slope = []
+    for i in range (len(x.columns)):
+        x_temp = x_train.iloc[:, i]
+        m = get_slope(x_temp, y_train)
+        slope.append(m)
     
-    # plt.plot(y,
-    #           predictor, 
-    #           color = 'g')
-
+    y_intercept = get_y_intercept(slope, x_train, y_train)
+    predictor = multivariate_regression(x_test, slope, y_intercept) #Multivariate Linear Regression predictor
+    
+    #Display the created predictor model
     plt.xlabel('Multivariable')
     plt.ylabel('Charges')
-    plt.title('Regression Algorithm')
+    plt.title('Regression Algorithm from ppt')
+    plt.scatter(x = y_test,
+                y = predictor,
+                edgecolor = 'b',
+                linewidth = 0.5)
     plt.show()
-
-    sns.regplot(x=y,y=predictor,ci=None,color ='red');
-
     
-if __name__ == "__main__": 
-    main()
+    sns.regplot(x=y_test,
+                y=predictor,
+                ci=90,
+                color ='#086655',
+                marker = 'd',
+                label = 'asd');
+
+    accuracy = r2_score(y_test, predictor) * 100
+    print(" Accuracy of the model created from the PPT Algorithm is %.2f%%" %accuracy)
+
+def using_sklearn():
+
+    from sklearn.linear_model import LinearRegression
+
+    insurance = pd.DataFrame(pd.read_csv('insurance.csv'))
+    x = insurance.loc[ : , : 'region']
+    y = insurance.loc[ : , 'charges']
+    
+    # Preprocessing - converting to categorical data to numeric type using pandas.get_dummies
+    dummy1 = pd.get_dummies(insurance['sex'])
+    dummy2 = pd.get_dummies(insurance['smoker'])
+    dummy3 = pd.get_dummies(insurance['region'])
+    x = pd.concat([x, dummy1], axis='columns')
+    x = pd.concat([x, dummy2], axis='columns')
+    x = pd.concat([x, dummy3], axis='columns')
+    x = x.drop(['sex', 'smoker', 'region'], axis='columns')
+    # ====
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=rngesus)
+
+    linreg = LinearRegression()
+    linreg.fit(x_test, y_test)
+    predictor = linreg.predict(x_test)
+    
+    plt.figure(2)
+    plt.title('Using Scikit-learn')
+    plt.xlabel('Actual');
+    plt.ylabel('Predicted');
+    plt.scatter(y_test,
+                predictor, 
+                edgecolor='#8C6512',
+                linewidth = 0.5)
+    plt.show()
+    
+    sns.regplot(x = y_test, 
+                y = predictor,
+                ci=90,
+                color ='#8C6512',
+                marker = 'd')
+    
+    accuracy = r2_score(y_test, predictor)*100
+    print(" Accuracy of the model created from Scikit-Learn is %.2f%%" %accuracy)
 
 
 
-# In converting category variable to numeric variable, I can use Pandas.get_dummies(DataFrame.column_name)
-# the problem with get_dummies is that it only labels category as 1 and 0 and creates a dummy column
-# I used DataFrame['column_name'].replace instead.
+
+main()
+using_sklearn()
 
 
 
-# insurance['sex'] = insurance['sex'].astype('category')
-# insurance['smoker'] = insurance['smoker'].astype('category')
-# insurance['region'] = insurance['region'].astype('category')
+
+
+
+
+
+# This gives an inaccurate model. 
+# Converting category variable to numeric variable using DataFrame.replace()
+# insurance['sex'].replace(to_replace = ['male', 'female'],
+#                          value = [0, 1],
+#                          inplace = True)
+
+# insurance['smoker'].replace(to_replace = ['yes', 'no'],
+#                             value = [0, 1],
+#                             inplace = True)
+
+# insurance['region'].replace(to_replace = ['northeast', 'northwest', 'southeast', 'southwest'],
+#                             value = [0, 1, 2, 3],
+#                             inplace = True)
+
+# insurance = insurance.astype({'sex':'int64', 'smoker':'int64', 'region':'int64'}) is the same as:
+    # insurance['sex'] = insurance['sex'].astype('int64')
+    # insurance['smoker'] = insurance['smoker'].astype('int64')
+    # insurance['region'] = insurance['region'].astype('int64')
