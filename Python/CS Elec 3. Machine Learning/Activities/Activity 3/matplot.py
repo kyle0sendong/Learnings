@@ -43,5 +43,3 @@ plot.pie(x = [maleCount, femaleCount],
          colors = ["#87ceeb", "pink"])
 plot.title("Distribution of Sex")
 plot.legend()
-
-
