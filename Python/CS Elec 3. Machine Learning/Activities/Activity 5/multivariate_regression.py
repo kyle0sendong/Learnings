@@ -81,7 +81,7 @@ def multivariate_regression(x, slope, y_intercept):
 
 # main() contains necessary code for running the algorithm presented from the class powerpoint
 def main(): 
-    insurance = pd.DataFrame(pd.read_csv('insurance.csv'))
+    insurance = pd.DataFrame(pd.read_csv('Python\csv_files\insurance.csv'))
     x = insurance.loc[ : , :'region']
     y = insurance.loc[ : , 'charges']
     
@@ -126,13 +126,13 @@ def main():
                 label = 'asd');
 
     accuracy = r2_score(y_test, predictor) * 100
-    print(" Accuracy of the model created from the PPT Algorithm is %.2f%%" %accuracy)
+    print(f' Accuracy of the model created from the PPT Algorithm is {accuracy:.2f}%')
 
 def using_sklearn():
 
     from sklearn.linear_model import LinearRegression
 
-    insurance = pd.DataFrame(pd.read_csv('insurance.csv'))
+    insurance = pd.DataFrame(pd.read_csv('Python\csv_files\insurance.csv'))
     x = insurance.loc[ : , : 'region']
     y = insurance.loc[ : , 'charges']
     
@@ -158,47 +158,18 @@ def using_sklearn():
     plt.ylabel('Predicted');
     plt.scatter(y_test,
                 predictor, 
-                edgecolor='#8C6512',
+                edgecolor = '#8C6512',
                 linewidth = 0.5)
     plt.show()
     
     sns.regplot(x = y_test, 
                 y = predictor,
                 ci=90,
-                color ='#8C6512',
+                color = '#8C6512',
                 marker = 'd')
     
-    accuracy = r2_score(y_test, predictor)*100
-    print(" Accuracy of the model created from Scikit-Learn is %.2f%%" %accuracy)
-
-
-
+    accuracy = r2_score(y_test, predictor) * 100
+    print(f' Accuracy of the model created from Scikit-Learn is {accuracy:.2f}%')
 
 main()
 using_sklearn()
-
-
-
-
-
-
-
-
-# This gives an inaccurate model. 
-# Converting category variable to numeric variable using DataFrame.replace()
-# insurance['sex'].replace(to_replace = ['male', 'female'],
-#                          value = [0, 1],
-#                          inplace = True)
-
-# insurance['smoker'].replace(to_replace = ['yes', 'no'],
-#                             value = [0, 1],
-#                             inplace = True)
-
-# insurance['region'].replace(to_replace = ['northeast', 'northwest', 'southeast', 'southwest'],
-#                             value = [0, 1, 2, 3],
-#                             inplace = True)
-
-# insurance = insurance.astype({'sex':'int64', 'smoker':'int64', 'region':'int64'}) is the same as:
-    # insurance['sex'] = insurance['sex'].astype('int64')
-    # insurance['smoker'] = insurance['smoker'].astype('int64')
-    # insurance['region'] = insurance['region'].astype('int64')

@@ -21,6 +21,7 @@ import pandas as pd                                          #for loading csv fi
 import numpy as np                                             #for using data as array
 import matplotlib.pyplot as plt                                 #for plotting graph of x,y
 from sklearn.model_selection import train_test_split        #splitting training and testing sets
+from sklearn.metrics import r2_score
 import random
 
 insurance = pd.read_csv('Python\csv_files\insurance.csv')
@@ -82,3 +83,6 @@ plt.xlabel('Age')
 plt.ylabel('BMI')
 plt.title('Regression Algorithm (1) from (Class Powerpoint)')
 plt.show()
+
+accuracy = r2_score(y_test, linear_regression_predictor) * 100
+print(f' Accuracy of the model created from Scikit-Learn is {accuracy:.2f}%')
