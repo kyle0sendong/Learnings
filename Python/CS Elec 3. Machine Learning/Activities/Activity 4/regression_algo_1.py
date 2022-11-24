@@ -1,5 +1,6 @@
 '''
 Kyle A. Destura - BSCS 4A
+Activity #4
 Using the data in the 'insurance.csv' file
 Create a linear regression prediction model 
 using the AGE and BMI column as values for X and Y 
@@ -17,10 +18,10 @@ Using the developed model, predict the BMI of a person with the following age:
 69 years old
 70 years old
 '''
-import pandas as pd                                          #for loading csv file data to numpy array
-import numpy as np                                             #for using data as array
-import matplotlib.pyplot as plt                                 #for plotting graph of x,y
-from sklearn.model_selection import train_test_split        #splitting training and testing sets
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 import random
 
@@ -70,14 +71,14 @@ plt.figure(1)
 plt.scatter(
     x_test,
     y_test,
-    edgecolor='b',
-    linewidth=0.5)
+    edgecolor = 'b',
+    linewidth = 0.5)
 
 plt.plot(
     x_test,
     linear_regression_predictor,
-    color='g',
-    linewidth=0.5)
+    color = 'g',
+    linewidth = 0.5)
 
 plt.xlabel('Age')
 plt.ylabel('BMI')
@@ -85,4 +86,12 @@ plt.title('Regression Algorithm (1) from (Class Powerpoint)')
 plt.show()
 
 accuracy = r2_score(y_test, linear_regression_predictor) * 100
-print(f' Accuracy of the model created from Scikit-Learn is {accuracy:.2f}%')
+print(f'Accuracy of the model created from formula in the PPT {accuracy:.2f}%')
+
+custom_x = np.array([17,18,19,20,65,66,67,68,69,70])
+linear_regression_predictor = regression_algorithm(custom_x, slope, y_intercept)
+print('\nPredicted BMI')
+i = 0
+while(i < len(custom_x)):
+    print(f'{custom_x[i]} years old: {linear_regression_predictor[i]:.2f}')
+    i += 1

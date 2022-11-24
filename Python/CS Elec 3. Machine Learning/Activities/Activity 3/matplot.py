@@ -1,6 +1,7 @@
 '''
 Kyle A. Destura BSCS 4A
-Activity 3. Reading CSV File and Displaying the Data in the Form of Scatter Plot
+Activity #3
+Reading CSV File and Displaying the Data in the Form of Scatter Plot
 
 1. Using Pandas Library, Read the CSV file 'insurance.csv' of Python.  
 2. Using MatPlotLib Library, Display the columns 'Age' and 'BMI' as an X & Y pair in a Scatter Plot
@@ -23,12 +24,14 @@ bmi = pd.to_numeric(insurance['bmi'])
 plt.scatter(
     x = age, 
     y = bmi,
-    facecolor='none',
-    edgecolor='r',
-    linewidth=0.8)
+    facecolor = 'none',
+    edgecolor = 'r',
+    linewidth = 0.8)
 
+plt.title('Age and BMI')
 plt.xlabel('Age')
 plt.ylabel('BMI')
+plt.show()
 
 agebmiMean = np.mean([age, bmi])
 print('\nAge and BMI Mean: ' + str(round(agebmiMean, 2)))

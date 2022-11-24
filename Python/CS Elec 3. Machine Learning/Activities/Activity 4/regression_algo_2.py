@@ -1,22 +1,13 @@
 '''
-https://towardsdatascience.com/linear-regression-model-899558ba0fc4
-
-Algorithm :
-1. Loading the Dataset
-2. Taking the independent and dependent variable
-3. Splitting to independent(x) and dependent(y) variables using split
-4. Choosing the Model
-5. Using Linear Regression Model
-6. Fitting the training dataset
-7. Use the created model to predict.s
+Regression Algorithm Using Scikit Learn Library
 '''
-import pandas as pd                                          #for loading csv file data to numpy array
-import numpy as np                                             #for using data as array
-import matplotlib.pyplot as plt                                 #for plotting graph of x,y
-from sklearn import linear_model                              #for model we want to predict by
-from sklearn.model_selection import train_test_split        #splitting training and testing sets
-from sklearn.metrics import r2_score
-import random
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split    #splitting training and testing sets
+from sklearn.metrics import r2_score    #For testing accuracy
+import random #For random number generator on seeds
 
 insurance = pd.read_csv('Python\csv_files\insurance.csv')
 x = insurance.loc[:,'age']
@@ -48,8 +39,16 @@ plt.plot(
 
 plt.xlabel('Age')
 plt.ylabel('BMI')
-plt.title('Regression Algorithm from (towardsdatascience.com)')
+plt.title('Regression Algorithm using Scikit Learn Library')
 plt.show()
 
 accuracy = r2_score(y_test, linear_regression_predictor) * 100
 print(f' Accuracy of the model created from Scikit-Learn is {accuracy:.2f}%')
+
+custom_x = np.array([17,18,19,20,65,66,67,68,69,70]).reshape(-1,1)
+linear_regression_predictor = linear_regression_model.predict(custom_x)
+print('\nPredicted BMI')
+i = 0
+while(i < len(custom_x)):
+    print(f'{custom_x[i]} years old: {linear_regression_predictor[i]:.2f}')
+    i += 1

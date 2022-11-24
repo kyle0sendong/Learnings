@@ -1,20 +1,17 @@
-# =============================================================================
-# In Multivariate Regression Algorithm, some of the input variables do not have number values 
-# which are not usable in creating the Regression Models. Examples of these are Sex, Address, Color, etc. These are called categorical data.  
-# To use these information as part of the historical data, dummy data are created to represent these information using values.  
-# For sex, 1 may be used to represent Males, and 0 for females.  
-# For colors, number may also be assigned for each.  
-# In this way, the information may be used in regression analysis and will make prediction possible.  
-# In the previously posted sample data set (insurance.csv), 
-# create a Multivariate Regression Analysis model that could 
-# predict the possible insurance charge based on age, sex, bmi, number of children, whether smoker or not, and location address as input variables.  
-# Create a dummy data for columns with categorical data (sex, smoker, region) in order to make it possible for regression analysis to work.  
-# Make sample predictions using random inputs to check for the capability of the model to make predictions.  
-# Submit a minimum of 10 screenshots of your sample runs in the link provided.   
-# =============================================================================
-
-
-#multivariate algorithm
+'''
+In Multivariate Regression Algorithm, some of the input variables do not have number values 
+which are not usable in creating the Regression Models. Examples of these are Sex, Address, Color, etc. These are called categorical data.  
+To use these information as part of the historical data, dummy data are created to represent these information using values.  
+For sex, 1 may be used to represent Males, and 0 for females.  
+For colors, number may also be assigned for each.  
+In this way, the information may be used in regression analysis and will make prediction possible.  
+In the previously posted sample data set (insurance.csv), 
+create a Multivariate Regression Analysis model that could 
+predict the possible insurance charge based on age, sex, bmi, number of children, whether smoker or not, and location address as input variables.  
+Create a dummy data for columns with categorical data (sex, smoker, region) in order to make it possible for regression analysis to work.  
+Make sample predictions using random inputs to check for the capability of the model to make predictions.  
+Submit a minimum of 10 screenshots of your sample runs in the link provided.   
+'''
 
 import pandas as pd
 import numpy as np
@@ -86,7 +83,6 @@ def main():
     y = insurance.loc[ : , 'charges']
     
     #Preprocessing - converting to categorical data to numeric type using pandas.get_dummies.
-    #I have tried using DataFrame.replace() to literally convert 0, 1, 2 values but it only gave inaccurate results
     dummy1 = pd.get_dummies(insurance['sex'])
     dummy2 = pd.get_dummies(insurance['smoker'])
     dummy3 = pd.get_dummies(insurance['region'])
@@ -128,48 +124,4 @@ def main():
     accuracy = r2_score(y_test, predictor) * 100
     print(f' Accuracy of the model created from the PPT Algorithm is {accuracy:.2f}%')
 
-def using_sklearn():
-
-    from sklearn.linear_model import LinearRegression
-
-    insurance = pd.DataFrame(pd.read_csv('Python\csv_files\insurance.csv'))
-    x = insurance.loc[ : , : 'region']
-    y = insurance.loc[ : , 'charges']
-    
-    # Preprocessing - converting to categorical data to numeric type using pandas.get_dummies
-    dummy1 = pd.get_dummies(insurance['sex'])
-    dummy2 = pd.get_dummies(insurance['smoker'])
-    dummy3 = pd.get_dummies(insurance['region'])
-    x = pd.concat([x, dummy1], axis='columns')
-    x = pd.concat([x, dummy2], axis='columns')
-    x = pd.concat([x, dummy3], axis='columns')
-    x = x.drop(['sex', 'smoker', 'region'], axis='columns')
-    # ====
-
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, random_state=rngesus)
-
-    linreg = LinearRegression()
-    linreg.fit(x_test, y_test)
-    predictor = linreg.predict(x_test)
-    
-    plt.figure(2)
-    plt.title('Using Scikit-learn')
-    plt.xlabel('Actual');
-    plt.ylabel('Predicted');
-    plt.scatter(y_test,
-                predictor, 
-                edgecolor = '#8C6512',
-                linewidth = 0.5)
-    plt.show()
-    
-    sns.regplot(x = y_test, 
-                y = predictor,
-                ci=90,
-                color = '#8C6512',
-                marker = 'd')
-    
-    accuracy = r2_score(y_test, predictor) * 100
-    print(f' Accuracy of the model created from Scikit-Learn is {accuracy:.2f}%')
-
 main()
-using_sklearn()

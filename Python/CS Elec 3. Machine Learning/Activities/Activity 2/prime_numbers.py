@@ -1,14 +1,13 @@
-# =============================================================================
-# Kyle A. Destura BSCS 4A
-# 3. Create a code that checks whether an integer is a Prime Number or not and 
-# display the first 25 10-digit Prime numbers
-# =============================================================================
-
+'''
+Kyle A. Destura BSCS 4A
+3. Create a code that checks whether an integer is a Prime Number or not and 
+display the first 25 10-digit Prime numbers
+'''
 import sys
 
 #Algorithm is from https://en.wikipedia.org/wiki/Primality_test
 
-def isPrime(number):
+def is_prime(number):
     if number <= 3:
         return number > 1
     
@@ -23,46 +22,27 @@ def isPrime(number):
         i += 6
     return True
 
-
-# primeNumbers. Takes the prime numbers from a range to Python max size integer
-# @param {start} starting number of a range 
-# @param {maxCount} number of prime numbers to be stored
-# @returns list of prime numbers
-# @throws parameter checking
-def primeNumbers(start = 1000000000, maxCount = 25):
+def prime_numbers(max_number = 1000, max_count = 25):
+    '''prime_numbers takes the prime numbers from a range 0 to  to Python max size integer
     
-    if start < 2 or maxCount < 1:
+    param {max_number} starting number of a range 
+    param {max_count} number of prime numbers to be stored
+    returns list of prime numbers
+    '''
+    if max_number < 2 or max_count < 1:
         return "Check Parameters. {start} must be greater than 2 and {maxCount} must be greater than 1"
     else:
-        digitCounter = 0
-        myList = list()
-        for i in range(start, sys.maxsize):
-            if isPrime(i):
-                myList.append(i)
-                digitCounter += 1
+        digit_counter = 0
+        my_list = list()
+        for i in range(max_number, sys.maxsize):
+            if is_prime(i):
+                my_list.append(i)
+                digit_counter += 1
                 
-            if digitCounter >= maxCount:
+            if digit_counter >= max_count:
                 break
             
-        return myList
+        return my_list
 
-myList = primeNumbers(1000000000000000)
-print(myList)
-
-
-# =============================================================================
-# isPrime. evaulates if a number is a prime number or not
-# @param {number} number to be evaluated
-# @returns a boolean if a number is boolean or not
-# @throws parameter checking
-#def isPrime(number):
-#      if number < 2:
-#          return "Check Parameters. {number} must be greater than 2."
-#      else:
-#          isPrime = True
-#          for i in range(2, int(number/2)):
-#              if number % i == 0:
-#                  isPrime = False
-#          return isPrime
-# 
-# =============================================================================
+my_list = prime_numbers(10000000000)
+print(my_list)
