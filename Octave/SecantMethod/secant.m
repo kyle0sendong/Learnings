@@ -1,4 +1,4 @@
-function [p, i] = secant(fx, p0, p1, TOL, MAX_ITERATION)
+function secant(fx, p0, p1, TOL, MAX_ITERATION)
 
     #https://stackoverflow.com/questions/64558908/how-to-read-function-from-keyboard-in-octave-and-use-it-later
     eval(['f = @(x) (' fx ');']);
@@ -6,7 +6,7 @@ function [p, i] = secant(fx, p0, p1, TOL, MAX_ITERATION)
 	#Step 1
 	q0 = f(p0);
 	q1 = f(p1);
-    p = 0
+    p = 0;
 
     #Step 2
     i = 2;
@@ -17,12 +17,10 @@ function [p, i] = secant(fx, p0, p1, TOL, MAX_ITERATION)
 
         #Step 4
         if abs(p - p1) < TOL
-            printf('Root found: %f\n', p);
-            printf('Iteration: %d\n', i);
-            break;
+            return;
         endif
 
-        printf('Iteration %d: %f\n', i, p)
+        printf('Iteration %d: %f\n', i, p);
 
         #Step 5
         i++;

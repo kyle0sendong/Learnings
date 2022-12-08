@@ -1,5 +1,6 @@
-
-function [l, u] = lu(n, a)
+function [l, u] = lu(a)
+    size_matrix = size(a);
+    n = size_matrix(1);
     l = zeros(n);
     u = zeros(n);
 
@@ -8,7 +9,7 @@ function [l, u] = lu(n, a)
         return;
     endif
 
-    if size(a, 1) != size(a, 2)
+    if size_matrix(1) != size_matrix(2)
         printf('Not a square matrix');
         return;
     endif

@@ -8,10 +8,6 @@ function main()
 	TOL = input('Tolerance = ');
 	MAX_ITERATION = input('Max Iteration = ');
 
-	[p, i] = secant(fx, p0, p1, TOL, MAX_ITERATION);
-
-	#Step 7
-	printf('Root: %f\n', p);
-	printf('Found after %d iterations.\n', i)
+	secant(fx, p0, p1, TOL, MAX_ITERATION);
 
 endfunction
