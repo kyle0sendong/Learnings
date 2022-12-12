@@ -1,4 +1,4 @@
-function secant(fx, p0, p1, TOL, MAX_ITERATION)
+function p =secant(fx, p0, p1, TOL, MAX_ITERATION)
 
     #https://stackoverflow.com/questions/64558908/how-to-read-function-from-keyboard-in-octave-and-use-it-later
     eval(['f = @(x) (' fx ');']);
