@@ -46,4 +46,3 @@ function p = bisection(fx, a, b, TOL, MAX_ITERATION)
   endwhile
 
 endfunction
-

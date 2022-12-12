@@ -19,4 +19,3 @@ function interval_i()
     bisection(fx, a, b, TOL, MAX_ITERATION);
 
 endfunction
-

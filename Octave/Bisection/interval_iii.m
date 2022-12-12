@@ -18,4 +18,3 @@ function interval_iii()
     bisection(fx, a, b, TOL, MAX_ITERATION);
 
 endfunction
-
