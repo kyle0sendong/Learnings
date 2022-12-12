@@ -2,6 +2,8 @@
 # output must display, for each iteration, the intervals being used, the computed midpoints,
 # and the function values using the obtained midpoints.
 
+#This program uses the pseudocode provided in the powerpoint
+
 function p = bisection(fx, a, b, TOL, MAX_ITERATION)
   eval(['f = @(x) (' fx ');']);
 
@@ -9,8 +11,7 @@ function p = bisection(fx, a, b, TOL, MAX_ITERATION)
   i = 1;
   fa = f(a);
 
-  # Output must display, for each iteration, the intervals being used, the computed midpoints, 
-  # and the function values using the obtained midpoints.
+  # Outputs the required information
   printf('  Iteration\t  an \t\t bn\t\t pn\t\t f(pn)\n');
 
   #Step 2 + Step 4
@@ -35,7 +36,7 @@ function p = bisection(fx, a, b, TOL, MAX_ITERATION)
     i++;
 
     #Step 6
-    if fa*fp > 0
+    if fa * fp > 0
       a = p;
       fa = fp;
     else

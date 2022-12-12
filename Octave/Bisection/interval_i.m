@@ -1,7 +1,7 @@
 # Construct separate codes that use your program 'bisection.m'
 # for the bisection method to solve the above problem for each interval
 
-#interval_i where a, b = [-2, -1]
+# Driver code where interval_i where a, b = [-2, -1]
 
 function interval_i()
     fx = 'x^4 - (2*x^3) - (4*(x^2)) + 4*x + 4';
