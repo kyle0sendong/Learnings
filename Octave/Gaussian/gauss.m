@@ -15,6 +15,11 @@ function gauss(A)
                 A(i,j) = A(i,j) - factor*A(k,j);
             endfor
             A(i,k) = 0;
+
+            if A(k,k) == 0
+                disp("No solution exists");
+                return;
+            endif
         endfor
     endfor
 
@@ -30,7 +35,7 @@ function gauss(A)
 
     # Print solution
     for i=1:n-1
-        fprintf('x%d = %d\n',i,x(i));
+        printf('x%d = %d\n',i,x(i));
     endfor
 
 endfunction
