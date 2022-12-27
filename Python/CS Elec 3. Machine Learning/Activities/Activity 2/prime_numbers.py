@@ -1,12 +1,13 @@
-'''
+"""
 Kyle A. Destura BSCS 4A
 3. Create a code that checks whether an integer is a Prime Number or not and 
 display the first 25 10-digit Prime numbers
-'''
+"""
+
 import sys
 
-#Algorithm is from https://en.wikipedia.org/wiki/Primality_test
 
+# Algorithm is from https://en.wikipedia.org/wiki/Primality_test
 def is_prime(number):
     if number <= 3:
         return number > 1
@@ -22,13 +23,14 @@ def is_prime(number):
         i += 6
     return True
 
+
 def prime_numbers(max_number = 1000, max_count = 25):
-    '''prime_numbers takes the prime numbers from a range 0 to  to Python max size integer
+    """prime_numbers takes the prime numbers from a range 0 to  to Python max size integer
     
     param {max_number} starting number of a range 
     param {max_count} number of prime numbers to be stored
     returns list of prime numbers
-    '''
+    """
     if max_number < 2 or max_count < 1:
         return "Check Parameters. {start} must be greater than 2 and {maxCount} must be greater than 1"
     else:
@@ -43,6 +45,7 @@ def prime_numbers(max_number = 1000, max_count = 25):
                 break
             
         return my_list
+
 
 my_list = prime_numbers(10000000000)
 print(my_list)

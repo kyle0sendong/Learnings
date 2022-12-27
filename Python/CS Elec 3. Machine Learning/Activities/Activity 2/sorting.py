@@ -1,11 +1,13 @@
-'''
+"""
 Kyle A. Destura BSCS 4A
 1. Create a code that will ask the user to input 25 integers and sort these 
 numbers in an ascending order without using the built-in SORT Function of 
 Python. Consider using the easiest Sorting # Algorithm (Bubble Sort) for this
 Activity. Display the sorted list after the process. Display also the result 
 in a Descending Order.
-'''
+"""
+
+
 def bubble_sort(my_list):
     list_length = len(my_list)
     swapped = False
@@ -19,6 +21,7 @@ def bubble_sort(my_list):
 
         if not swapped:
             return
+
 
 print('Input 25 integers.')
 int_list = list()

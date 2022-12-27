@@ -1,9 +1,9 @@
-'''
+"""
 Kyle A. Destura BSCS 4A
 4. Create a code that creates a list of 100 random integers between 100 and 
 100,000. Display the minimum and the maximum value among the randomly created
 list. Display also the list on the screen.
-'''
+"""
 import random
 
 random_integer = list()

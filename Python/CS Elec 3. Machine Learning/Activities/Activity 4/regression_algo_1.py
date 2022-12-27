@@ -26,14 +26,16 @@ from sklearn.metrics import r2_score
 import random
 
 insurance = pd.read_csv('Python\csv_files\insurance.csv')
-x = insurance.loc[:,'age']
-y = insurance.loc[:,'bmi']
+x = insurance.loc[:, 'age']
+y = insurance.loc[:, 'bmi']
 x = np.array(x)
 y = np.array(y)
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 1/3, random_state = random.randrange(0, 42))
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=1/3, random_state=random.randrange(0, 42))
+
 
 def get_y_intercept(slope, x, y):
     return np.mean(y) - (slope*np.mean(x))
+
 
 def get_slope(x, y):
     x_mean = np.mean(x)
@@ -41,19 +43,21 @@ def get_slope(x, y):
     numerator = 0
     denominator = 0
 
-    for i in range(len(x)):
-        xi = x[i]
-        yi = y[i]
+    for index in range(len(x)):
+        xi = x[index]
+        yi = y[index]
         numerator += (xi-x_mean) * (yi-y_mean)
         denominator += ((xi-x_mean) ** 2)
     
     return numerator/denominator
+
 
 def get_slope_y_intercept(x, y):
     slope = get_slope(x, y)
     y_intercept = get_y_intercept(slope, x, y)
 
     return slope, y_intercept
+
 
 def regression_algorithm(x, slope, y_intercept):
     predictor = []
@@ -63,6 +67,7 @@ def regression_algorithm(x, slope, y_intercept):
 
     return np.array(predictor)
 
+
 slope, y_intercept = get_slope_y_intercept(x_train, y_train)
 linear_regression_predictor = regression_algorithm(x_test, slope, y_intercept)
 
@@ -71,14 +76,14 @@ plt.figure(1)
 plt.scatter(
     x_test,
     y_test,
-    edgecolor = 'b',
-    linewidth = 0.5)
+    edgecolor='b',
+    linewidth=0.5)
 
 plt.plot(
     x_test,
     linear_regression_predictor,
-    color = 'g',
-    linewidth = 0.5)
+    color='g',
+    linewidth=0.5)
 
 plt.xlabel('Age')
 plt.ylabel('BMI')
@@ -88,10 +93,11 @@ plt.show()
 accuracy = r2_score(y_test, linear_regression_predictor) * 100
 print(f'Accuracy of the model created from formula in the PPT {accuracy:.2f}%')
 
-custom_x = np.array([17,18,19,20,65,66,67,68,69,70])
+custom_x = np.array([17, 18, 19, 20, 65, 66, 67, 68, 69, 70])
 linear_regression_predictor = regression_algorithm(custom_x, slope, y_intercept)
 print('\nPredicted BMI')
 i = 0
-while(i < len(custom_x)):
+
+while i < len(custom_x):
     print(f'{custom_x[i]} years old: {linear_regression_predictor[i]:.2f}')
     i += 1

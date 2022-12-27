@@ -1,8 +1,9 @@
-'''
+"""
 Kyle A. Destura BSCS 4A
 2. Using the situation above, create a similar code but using the built-in 
 SORT function of the Python Language.
-'''
+"""
+
 print('Input 25 integers.')
 int_list = list()
 iterator = 1
