@@ -8,7 +8,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0a64b3b5-721e-41e0-b656-7dfdcb661f5f" name="Changes" comment="" />
+    <list default="true" id="0a64b3b5-721e-41e0-b656-7dfdcb661f5f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/nz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/mt5/connect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/test/mt5/connect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/mt5/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/ta/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/ta/ema.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/ta.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,14 +43,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Lenovo/Kyle/SelfStudy/Learnings",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lenovo/Kyle/SelfStudy/Learnings&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python for Finance\test" />

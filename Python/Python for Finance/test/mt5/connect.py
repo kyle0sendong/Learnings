@@ -9,8 +9,3 @@ def connect_to_mt(login, password, server):
     mt5.login(login, password, server)
     account_info = mt5.account_info()
     print(account_info)
-
-# symbol_price = mt5.symbol_info("BTCUSD#")._asdict()
-# print(symbol_price)
-
-
