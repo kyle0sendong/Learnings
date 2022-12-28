@@ -1,29 +1,47 @@
 """ Exponential Moving Averages """
 
 import pandas as pd
-import numpy as np
-import statistics as stats
+from ta.trend import *
+from ta.momentum import *
+
+
+def hl2(source):
+    i = 0
+    hl2_container = []
+    while i < len(source['high']):
+        high = source['high'][i]
+        low = source['low'][i]
+        hl2_value = (high+low) / 2
+        hl2_container.append(hl2_value)
+        i += 1
+    return pd.Series(hl2_container)
 
 
 def ema(source, period):
-    k = 2 / (period + 1)  # smoothing constant
-    ema_p = 0
-    ema_values = []
-    for source_price in source:
-        if ema_p == 0:
-            ema_p = source_price
-        else:
-            ema_p = (source_price - ema_p) * k + ema_p
-        ema_values.append(ema_p)
-    return ema_values
+    return ema_indicator(source, period)
 
 
 def sma(source, length):
-    history = []
-    sma_values = []
-    for source_price in source:
-        history.append(source_price)
-        if len(history) > length:  # remove the oldest price, only average over last 'time_period' prices
-            del(history[0])
-        sma_values.append(stats.mean(history))
-    return sma_values
+    return sma_indicator(source, length)
+
+
+def tsi_mod(source, slow=12, fast=26, signal=19):
+    """ True Strength Index Modified
+    Returns rounded TSI value
+    Returns TSI Signal Value
+    """
+
+    tsi_value = round(tsi(hl2(source), slow, fast))
+    tsi_signal = round(ema(tsi_value, signal))
+
+    i = 0
+    while i < len(tsi_value):
+
+        difference = abs(tsi_value[i] - tsi_signal[i])
+
+        if difference <= 7:
+            tsi_value[i] = tsi_signal[i]
+            tsi_signal[i] = tsi_value[i]
+        i += 1
+
+    return tsi_value, tsi_signal

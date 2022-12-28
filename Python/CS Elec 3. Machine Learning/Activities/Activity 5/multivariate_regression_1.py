@@ -23,6 +23,7 @@ import random
 #number seed for the random number generator used in splitting of dataset
 rngesus = random.randrange(0, 42) 
 
+
 # get_y_intercept(slope, x, y)) computes for the y - intercept of x and y
 def get_y_intercept(slope, x, y):
     y_intercept = 0
@@ -35,6 +36,7 @@ def get_y_intercept(slope, x, y):
 
     y_intercept =  y_mean - mx
     return y_intercept
+
 
 # get_slope() computes the slope of x and y
 def get_slope(x, y):
@@ -66,7 +68,7 @@ def multivariate_regression(x, slope, y_intercept):
 
     for i in range(len(x)): 
         mx = 0
-        for j in range(len(x.columns)):  #m1x1 + m2x2 ... mnxn
+        for j in range(len(x.columns)):  # m1x1 + m2x2 ... mnxn
             x_temp = x.iloc[i, j]
             mx += slope[j] * x_temp
             
@@ -75,6 +77,7 @@ def multivariate_regression(x, slope, y_intercept):
         
     predictor = np.array(predictor)
     return predictor
+
 
 # main() contains necessary code for running the algorithm presented from the class powerpoint
 def main(): 
