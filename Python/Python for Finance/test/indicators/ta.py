@@ -5,18 +5,6 @@ from ta.trend import *
 from ta.momentum import *
 
 
-def hl2(source):
-    i = 0
-    hl2_container = []
-    while i < len(source['high']):
-        high = source['high'][i]
-        low = source['low'][i]
-        hl2_value = (high+low) / 2
-        hl2_container.append(hl2_value)
-        i += 1
-    return pd.Series(hl2_container)
-
-
 def ema(source, period):
     return ema_indicator(source, period)
 
@@ -31,7 +19,7 @@ def tsi_mod(source, slow=12, fast=26, signal=19):
     Returns TSI Signal Value
     """
 
-    tsi_value = round(tsi(hl2(source), slow, fast))
+    tsi_value = round(tsi(source, slow, fast))
     tsi_signal = round(ema(tsi_value, signal))
 
     i = 0
@@ -45,3 +33,9 @@ def tsi_mod(source, slow=12, fast=26, signal=19):
         i += 1
 
     return tsi_value, tsi_signal
+
+
+def psar(high, low, close, step, max_step):
+    up = psar_up(high, low, close, step, max_step)
+    down = psar_down(high, low, close, step, max_step)
+    return up, down
