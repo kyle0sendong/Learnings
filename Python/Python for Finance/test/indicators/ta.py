@@ -29,6 +29,20 @@ def sma(source, length):
     return sma_indicator(source, length)
 
 
+def rma(source, length):
+    rma_container = []
+    alpha = 1/length
+    sum_ = 0
+    i = 0
+    while i < len(source):
+        prev_sum = sum_
+        sum_ = alpha*source[i] + (1 - alpha)*nz(prev_sum)
+        rma_container.append(sum_)
+        i += 1
+
+    return pd.Series(rma_container)
+
+
 def tsi_mod(source, slow=12, fast=26, signal=19):
     """ True Strength Index Modified
 
