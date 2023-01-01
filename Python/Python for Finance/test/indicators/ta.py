@@ -4,6 +4,18 @@ from ta.trend import *
 from ta.momentum import *
 
 
+def hl2(ohlc):
+    i = 0
+    hl2_container = []
+    while i < len(ohlc['high']):
+        high = ohlc['high'][i]
+        low = ohlc['low'][i]
+        hl2_value = (high+low) / 2
+        hl2_container.append(hl2_value)
+        i += 1
+    return pd.Series(hl2_container)
+
+
 def nz(x, y=None):
     """
     RETURNS

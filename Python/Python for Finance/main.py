@@ -10,18 +10,6 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
 
 
-def hl2(ohlc):
-    i = 0
-    hl2_container = []
-    while i < len(ohlc['high']):
-        high = ohlc['high'][i]
-        low = ohlc['low'][i]
-        hl2_value = (high+low) / 2
-        hl2_container.append(hl2_value)
-        i += 1
-    return pd.Series(hl2_container)
-
-
 def main():
     login = 65813096
     password = 'maskinanO1'
