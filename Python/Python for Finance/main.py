@@ -17,48 +17,63 @@ def main():
 
     connect_to_mt(login, password, server)
 
-    ohlc_data = pd.DataFrame(mt5.copy_rates_range('EURUSD#',
-                                                  mt5.TIMEFRAME_D1,
-                                                  datetime(2012, 1, 1),
-                                                  datetime(2022, 12, 27)))
+    df = pd.DataFrame(mt5.copy_rates_range('EURUSD#', mt5.TIMEFRAME_D1, datetime(2012, 1, 1),
+                                           datetime(2022, 12, 27)))
 
-    ohlc_data = ohlc_data.assign(OpenPrice=pd.Series(ohlc_data['open'], index=ohlc_data.index))
-    ohlc_data = ohlc_data.assign(HighPrice=pd.Series(ohlc_data['high'], index=ohlc_data.index))
-    ohlc_data = ohlc_data.assign(LowPrice=pd.Series(ohlc_data['low'], index=ohlc_data.index))
-    ohlc_data = ohlc_data.assign(ClosePrice=pd.Series(ohlc_data['close'], index=ohlc_data.index))
-    open_price = ohlc_data['OpenPrice']
-    high_price = ohlc_data['HighPrice']
-    low_price = ohlc_data['LowPrice']
-    close_price = ohlc_data['ClosePrice']
-    hl2_price = hl2(ohlc_data)
+    open_price = df['open']
+    high_price = df['high']
+    low_price = df['low']
+    close_price = df['close']
+    hl2_price = hl2(df)
 
-    # Exponential Moving Average (EMA)
-    ema_length = 100
-    ema_values = ema(close_price, ema_length)
-    ohlc_data = ohlc_data.assign(EMA=ema_values)
+    df.rename(columns={'time': 'timestamp', 'tick_volume': 'volume'}, inplace=True)
+    df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+
+    # Smoothed Moving Average (SMA)
+    sma40 = sma(close_price, 40)
+    df = df.assign(SMA40=sma40)
+
+    #Relative Moving Average
+    rma2 = rma(close_price, 2)
+    rma6 = rma(close_price, 6)
+    df = df.assign(RMA2=rma2)
+    df = df.assign(RMA6=rma6)
 
     # True Strength Index (TSI)
     tsi_slow = 12
     tsi_fast = 26
     tsi_smooth = 19
     tsi_values, tsi_signal = tsi_mod(hl2_price, tsi_slow, tsi_fast, tsi_smooth)
-    ohlc_data = ohlc_data.assign(TSI=tsi_values)
-    ohlc_data = ohlc_data.assign(TSISignal=tsi_signal)
+    df = df.assign(TSI=tsi_values)
+    df = df.assign(TSISignal=tsi_signal)
 
     # Parabolic SAR
     psar_increment = 0.06
     psar_maximum = 0.035
     sar_up, sar_down = psar(high_price, low_price, close_price, psar_increment, psar_maximum)
-    ohlc_data = ohlc_data.assign(PSARUP=sar_up)
-    ohlc_data = ohlc_data.assign(PSARDOWN=sar_down)
+    df = df.assign(PSARUP=sar_up)
+    df = df.assign(PSARDOWN=sar_down)
 
     # Coral
     coral_length = 20
     coral_multiplier = 0.7
     coral_up, coral_down = coral(close_price, coral_length, coral_multiplier)
-    ohlc_data = ohlc_data.assign(CORALUP=coral_up)
-    ohlc_data = ohlc_data.assign(CORALDOWN=coral_down)
+    df = df.assign(CORALUP=coral_up)
+    df = df.assign(CORALDOWN=coral_down)
 
+    long_condition1 = df['CORALUP'] is not None
+    long_condition2 = df['RMA2'] > df['RMA6']
+    long_condition3 = df['PSARUP'] is not None
+    long_condition4 = df['TSI'] > df['TSISignal']
+    entry1 = long_condition1 & long_condition2 & long_condition3 & long_condition4
+
+    long_condition2 = df['close'] > df['SMA40']
+    entry2 = long_condition1 & long_condition2 & long_condition3 & long_condition4
+    df['Buy'] = entry1 | entry2
+    df['BuyPrice'] = np.where(df.Buy, df.close * 0.99, np.nan)
+    df.BuyPrice = df.BuyPrice.ffill()   # Forward Fill
+    df['SellPrice'] = df['open'].shift(-1)
+    print(df)
     # Display Indicators
     fig = plt.figure()
 
@@ -66,7 +81,7 @@ def main():
     ax1 = fig.add_subplot(311, ylabel='Price')
     ax1.set_facecolor('xkcd:black')
     close_price.plot(ax=ax1, color='green', lw=0.7, legend=True)
-    ema_values.plot(ax=ax1, color='b', lw=0.7, legend=True)
+    sma40.plot(ax=ax1, color='b', lw=0.7, legend=True)
     sar_up.plot(ax=ax1, color='green', lw=0.7, legend=True)
     sar_down.plot(ax=ax1, color='red', lw=0.7, legend=True)
 
@@ -81,6 +96,9 @@ def main():
     ax3.set_facecolor('xkcd:black')
     coral_up.plot(ax=ax3, color='green', lw=0.7, legend=True)
     coral_down.plot(ax=ax3, color='red', lw=0.7, legend=True)
+
+
+
     plt.show()
 
 
