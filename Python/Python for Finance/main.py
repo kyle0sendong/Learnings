@@ -1,4 +1,4 @@
-""" Main """
+""" Main Backtester. Uses Vectorization """
 
 from test.mt5.connect import *
 from test.indicators.ta import *
