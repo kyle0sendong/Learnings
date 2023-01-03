@@ -9,7 +9,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a64b3b5-721e-41e0-b656-7dfdcb661f5f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Python/Python Pandas/Pandas Data Series/cumsum_tranpose.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Python/Python for Finance/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/indicators/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/nz.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/indicators/ta.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/indicators/ta.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/mt5/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/mt5/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python/Python for Finance/test/mt5/connect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Python/Python for Finance/mt5/connect.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,8 +55,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python for Finance\test" />
       <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python for Finance" />
+      <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python for Finance\indicators" />
+      <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python for Finance\test" />
       <recent name="C:\Users\Lenovo\Kyle\SelfStudy\Learnings\Python\Python Pandas\Pandas DataFrame" />
     </key>
   </component>

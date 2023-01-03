@@ -1,7 +1,7 @@
 """ Main Backtester. Uses Vectorization """
 
-from test.mt5.connect import *
-from test.indicators.ta import *
+from mt5.connect import *
+from indicators.ta import *
 from datetime import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
