@@ -65,7 +65,7 @@ def main():
     long_condition2 = df.close > df.SMA40
     entry2 = long_condition1 & long_condition2 & long_condition3 & long_condition4
     df['buy'] = (entry1 | entry2).astype(float)
-    df['buy_price'] = np.where(df.Buy, df.close, np.nan)
+    df['buy_price'] = np.where(df['buy'], df['close'], np.nan)
     df['buy_price'] = df['buy_price'].ffill()   # Forward Fill
     df['sell_price'] = df['open'].shift(-1)
     df.to_csv('data.csv')
