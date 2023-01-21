@@ -1,7 +1,9 @@
 """ Exponential Moving Averages """
 
-from ta.trend import *
-from ta.momentum import *
+import pandas as pd
+from ta.trend import psar_up, psar_down, ema_indicator, sma_indicator
+from ta.momentum import tsi
+from ta.volatility import average_true_range
 
 
 def hl2(ohlc):
@@ -131,3 +133,7 @@ def coral(source, sm, cd):
     bfr_down = pd.Series(bfr_down)
 
     return bfr_up, bfr_down
+
+
+def atr(high, low, close, length):
+    return average_true_range(high, low, close, length)
