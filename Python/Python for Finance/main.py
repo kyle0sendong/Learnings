@@ -12,27 +12,27 @@ pd.set_option('display.width', 1000)
 
 
 def main():
-    year = ['2014', '2015', '2016', '2017', '2018', '2019',
+    year = ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
             '2020', '2021', '2022']
 
     for num in range(len(year)):
-        df = pd.read_csv('./data/btcusd/H1/'+str(year[num])+'.csv')
+        df = pd.read_csv('./data/eurusd/H1/'+str(year[num])+'.csv')
 
         # Technical Indicators
         hl2_price = hl2(df)
-        sma40_length = 40
+        sma40_length = 400
 
         rma2_length = 2
         rma6_length = 6
 
-        tsi_slow = 26
-        tsi_fast = 40
+        tsi_slow = 12
+        tsi_fast = 26
         tsi_smooth = 19
 
-        sar_increment = 0.06
-        sar_maximum = 0.035
+        sar_increment = 0.05
+        sar_maximum = 0.02
 
-        coral_length = 20
+        coral_length = 21
         coral_multiplier = 0.8
 
         atr_length = 5
@@ -49,7 +49,8 @@ def main():
         long_condition1 = (coral_up is not None) | ((coral_up is None) & (sar_up is not None))
         long_condition2 = rma2 > rma6
         long_condition3 = sar_up is not None
-        long_condition4 = tsi_values >= tsi_signal
+        long_condition4 = tsi_values > tsi_signal
+        long_condition5 = df['close'] >= sma40
         entry1 = long_condition1 & long_condition2 & long_condition3 & long_condition4
 
         # Long Entry Conditions
@@ -119,6 +120,12 @@ def main():
         print(f'win rate: {win/num_trades * 100}%')
         print(f'number of trades: {num_trades}')
         print(f'Total Profit : {(account_size + savings) - initial_size}\n\n')
+
+    """
+    Todo: 
+        1. Stop loss problem and position sizing
+        2. Optimize trading strategy
+    """
 
     # # Display Indicators
     # fig = plt.figure()
