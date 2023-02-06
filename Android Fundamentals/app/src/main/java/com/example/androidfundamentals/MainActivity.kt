@@ -19,13 +19,21 @@ class MainActivity : AppCompatActivity() {
         Log.d("Sample", "Hallo")
 
         binding.sampleLayout.setOnClickListener {
-            val intent = Intent(this, SampleLayout::class.java)
-            startActivity(intent)
+            Intent(this, SampleLayout::class.java).also {
+                startActivity(it)
+            }
         }
 
         binding.sampleEditText.setOnClickListener {
-            val intent = Intent(this, SampleEditText::class.java)
-            startActivity(intent)
+            Intent(this, SampleEditText::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.sampleBottomNav.setOnClickListener {
+            Intent(this, SampleBottomNav::class.java).also {
+                startActivity(it)
+            }
         }
     }
 
