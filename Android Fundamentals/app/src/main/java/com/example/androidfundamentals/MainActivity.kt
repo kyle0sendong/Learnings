@@ -30,6 +30,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        binding.sampleRecyclerview.setOnClickListener {
+            Intent(this, SampleRecyclerview::class.java).also {
+                startActivity(it)
+            }
+        }
+
         binding.sampleBottomNav.setOnClickListener {
             Intent(this, SampleBottomNav::class.java).also {
                 startActivity(it)

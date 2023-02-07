@@ -13,6 +13,13 @@
         android:theme="@style/Theme.AndroidFundamentals"
         tools:targetApi="31">
         <activity
+            android:name=".SampleRecyclerview"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".SampleBottomNav"
             android:exported="false">
             <meta-data

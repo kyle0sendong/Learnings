@@ -29,15 +29,25 @@
         app:layout_constraintTop_toBottomOf="@+id/sample_layout" />
 
     <Button
-        android:id="@+id/sample_bottom_nav"
+        android:id="@+id/sample_recyclerview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Sample Bottom Navigation"
+        android:text="Sample Recyclerview"
         app:layout_constraintEnd_toEndOf="@+id/sample_edit_text"
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="@+id/sample_edit_text"
         app:layout_constraintTop_toBottomOf="@+id/sample_edit_text" />
+
+    <Button
+        android:id="@+id/sample_bottom_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Sample Bottom Navgigation"
+        app:layout_constraintEnd_toEndOf="@+id/sample_recyclerview"
+        app:layout_constraintStart_toStartOf="@+id/sample_recyclerview"
+        app:layout_constraintTop_toBottomOf="@+id/sample_recyclerview" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
