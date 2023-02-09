@@ -37,11 +37,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.sampleBottomNav.setOnClickListener {
-            Intent(this, SampleBottomNav::class.java).also {
+        binding.sampleFragments.setOnClickListener {
+            Intent(this, SampleFragments::class.java).also {
                 startActivity(it)
             }
         }
+
+//        binding.sampleBottomNav.setOnClickListener {
+//            Intent(this, SampleBottomNav::class.java).also {
+//                startActivity(it)
+//            }
+//        }
     }
 
     //Overriding life cycle of activity

@@ -39,12 +39,23 @@
         app:layout_constraintStart_toStartOf="@+id/sample_edit_text"
         app:layout_constraintTop_toBottomOf="@+id/sample_edit_text" />
 
+<!--    <Button-->
+<!--        android:id="@+id/sample_bottom_nav"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="160dp"-->
+<!--        android:text="Sample Bottom Navgigation"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/sample_recyclerview"-->
+<!--        app:layout_constraintHorizontal_bias="0.517"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/sample_recyclerview"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sample_recyclerview" />-->
+
     <Button
-        android:id="@+id/sample_bottom_nav"
+        android:id="@+id/sample_fragments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Sample Bottom Navgigation"
+        android:text="Sample fragments"
         app:layout_constraintEnd_toEndOf="@+id/sample_recyclerview"
         app:layout_constraintStart_toStartOf="@+id/sample_recyclerview"
         app:layout_constraintTop_toBottomOf="@+id/sample_recyclerview" />
