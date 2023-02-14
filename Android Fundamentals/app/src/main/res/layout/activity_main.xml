@@ -60,5 +60,16 @@
         app:layout_constraintStart_toStartOf="@+id/sample_recyclerview"
         app:layout_constraintTop_toBottomOf="@+id/sample_recyclerview" />
 
+    <Button
+        android:id="@+id/sample_room"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Sample Room Database"
+        app:layout_constraintEnd_toEndOf="@+id/sample_bottom_nav"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="@+id/sample_bottom_nav"
+        app:layout_constraintTop_toBottomOf="@+id/sample_bottom_nav" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

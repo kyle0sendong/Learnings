@@ -22,11 +22,13 @@ class SampleRecyclerview : AppCompatActivity() {
         val adapter = TodoAdapter(todoList)
         binding.sampleRvTodo.adapter = adapter
         binding.sampleRvTodo.layoutManager = LinearLayoutManager(this)
+
         binding.sampleAddTodo.setOnClickListener {
             val title = binding.sampleEtTodo.text.toString()
             val todo = Todo(title, false)
             todoList.add(todo)
             adapter.notifyItemInserted(todoList.size-1)
         }
+
     }
 }

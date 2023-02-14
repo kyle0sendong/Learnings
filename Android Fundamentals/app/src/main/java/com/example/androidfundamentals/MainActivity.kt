@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.androidfundamentals.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         binding.sampleRecyclerview.setOnClickListener {
             Intent(this, SampleRecyclerview::class.java).also {
                 startActivity(it)
@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.sampleBottomNav.setOnClickListener {
             Intent(this, SampleBottomNav::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.sampleRoom.setOnClickListener {
+            Intent(this, SampleRoom::class.java).also {
                 startActivity(it)
             }
         }

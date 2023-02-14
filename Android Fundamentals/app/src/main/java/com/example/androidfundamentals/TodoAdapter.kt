@@ -1,11 +1,10 @@
 package com.example.androidfundamentals
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidfundamentals.databinding.SampleItemTodoBinding
+
 
 class TodoAdapter(var todos: List<Todo>): RecyclerView.Adapter<TodoAdapter.ToDoViewHolder>() {
 
