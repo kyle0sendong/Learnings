@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.databinding.ActivitySampleRecyclerviewBinding
+import com.example.androidfundamentals.samplerecyclerview.Todo
+import com.example.androidfundamentals.samplerecyclerview.TodoAdapter
 
 class SampleRecyclerview : AppCompatActivity() {
 

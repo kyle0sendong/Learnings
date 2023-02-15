@@ -1,4 +1,4 @@
-package com.example.androidfundamentals
+package com.example.androidfundamentals.samplerecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

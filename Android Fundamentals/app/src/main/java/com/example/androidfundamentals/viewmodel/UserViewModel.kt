@@ -1,9 +1,12 @@
-package com.example.androidfundamentals.data
+package com.example.androidfundamentals.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.androidfundamentals.data.UserDatabase
+import com.example.androidfundamentals.repository.UserRepository
+import com.example.androidfundamentals.model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

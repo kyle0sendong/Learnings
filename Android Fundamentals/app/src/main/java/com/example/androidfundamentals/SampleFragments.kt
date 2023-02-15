@@ -3,6 +3,8 @@ package com.example.androidfundamentals
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.androidfundamentals.databinding.ActivitySampleFragmentsBinding
+import com.example.androidfundamentals.samplefragment.FirstFragment
+import com.example.androidfundamentals.samplefragment.SecondFragment
 
 class SampleFragments : AppCompatActivity() {
 

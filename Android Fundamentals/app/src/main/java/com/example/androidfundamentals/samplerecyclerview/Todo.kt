@@ -1,4 +1,4 @@
-package com.example.androidfundamentals
+package com.example.androidfundamentals.samplerecyclerview
 
 data class Todo(
     val title: String,

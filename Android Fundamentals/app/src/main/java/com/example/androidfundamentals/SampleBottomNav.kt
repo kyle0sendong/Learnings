@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.androidfundamentals.databinding.ActivitySampleBottomNavBinding
+import com.example.androidfundamentals.samplefragment.FirstFragment
+import com.example.androidfundamentals.samplefragment.SecondFragment
 
 class SampleBottomNav : AppCompatActivity() {
 

@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.androidfundamentals.model.User
 
 // DAO - Data Access Object - contains methods used for accessing a database
 // @ is annotate

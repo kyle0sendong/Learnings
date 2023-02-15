@@ -3,7 +3,7 @@ package com.example.androidfundamentals.fragments.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidfundamentals.data.User
+import com.example.androidfundamentals.model.User
 import com.example.androidfundamentals.databinding.CustomRowBinding
 
 
