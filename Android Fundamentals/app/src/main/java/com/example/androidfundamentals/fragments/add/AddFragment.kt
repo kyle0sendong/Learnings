@@ -15,19 +15,21 @@ import com.example.androidfundamentals.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
 
-    private lateinit var binding: FragmentAddBinding
     private lateinit var mUserViewModel: UserViewModel
+    private var _binding: FragmentAddBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddBinding.inflate(inflater, container, false)
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
 
         binding.roomAddBtn.setOnClickListener {
             insertToDatabase()
         }
+
         return binding.root
     }
 
@@ -51,4 +53,8 @@ class AddFragment : Fragment() {
         return !(fname.isEmpty() && lname.isEmpty() && age.isEmpty())
     }
 
+    override fun onDestroyView() {  // avoid memory leaks
+        super.onDestroyView()
+        _binding = null
+    }
 }

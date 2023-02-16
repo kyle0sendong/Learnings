@@ -1,10 +1,7 @@
 package com.example.androidfundamentals.data
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.androidfundamentals.model.User
 
 // DAO - Data Access Object - contains methods used for accessing a database
@@ -21,5 +18,9 @@ interface UserDao {
     // SQL command for reading
     @Query("SELECT * FROM user_table ORDER BY id ASC")
     fun readAllData(): LiveData<List<User>>
+
+    // SQL for update
+    @Update
+    suspend fun updateUser(user: User)
 
 }

@@ -15,7 +15,8 @@ import com.example.androidfundamentals.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
-    private lateinit var binding: FragmentListBinding
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
     private lateinit var mUserViewModel: UserViewModel
 
     override fun onCreateView(
@@ -23,18 +24,19 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
 
         // Creating recyclerview
         val adapter = ListAdapter()
         binding.listFragment.adapter = adapter
         binding.listFragment.layoutManager = LinearLayoutManager(requireContext())
 
-        // Userviewmodel
+        // User Viewmodel
         mUserViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
         })
+
         binding.roomActionBtn.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
@@ -42,4 +44,8 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

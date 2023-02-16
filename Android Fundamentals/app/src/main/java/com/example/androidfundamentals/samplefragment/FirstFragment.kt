@@ -8,27 +8,30 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.androidfundamentals.R
+import com.example.androidfundamentals.databinding.FragmentFirstBinding
 
 
 class FirstFragment : Fragment() {
 
+    private var _binding: FragmentFirstBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_first, container, false)
+    ): View {
 
-        val fr1_text = view.findViewById<TextView>(R.id.fr1_text)
-        val fr1_btn1 = view.findViewById<Button>(R.id.fr1_btn1)
+        _binding = FragmentFirstBinding.inflate(inflater, container, false)
 
-        fr1_btn1.setOnClickListener {
-            fr1_text.text = "Button clicked nice"
+        binding.fr1Btn1.setOnClickListener {
+            binding.fr1Text.text = "Button clicked nice"
         }
 
-        return view
+        return binding.root
     }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
