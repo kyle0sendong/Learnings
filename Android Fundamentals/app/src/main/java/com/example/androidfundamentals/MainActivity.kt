@@ -54,6 +54,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+
+        binding.capturePhoto.setOnClickListener{
+            Intent(this, CapturePhoto::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     //Overriding life cycle of activity
