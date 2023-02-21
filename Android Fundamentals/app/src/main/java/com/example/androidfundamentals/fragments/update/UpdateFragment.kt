@@ -59,9 +59,8 @@ class UpdateFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if(menuItem.itemId ==  R.id.delete_menu) {
             deleteUser()
-            return true
         }
-        return false
+        return true
     }
 
     private fun deleteUser() {
@@ -81,7 +80,7 @@ class UpdateFragment : Fragment(), MenuProvider {
     }
 
     private fun updateItem(){
-        val firstName = binding.roomUpdateAge.text.toString()
+        val firstName = binding.roomUpdateFname.text.toString()
         val lastName = binding.roomUpdateLname.text.toString()
         val age = binding.roomUpdateAge.text.toString()
 
