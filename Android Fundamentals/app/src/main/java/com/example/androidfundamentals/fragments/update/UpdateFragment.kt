@@ -59,8 +59,9 @@ class UpdateFragment : Fragment(), MenuProvider {
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         if(menuItem.itemId ==  R.id.delete_menu) {
             deleteUser()
+            return true
         }
-        return true
+        return false
     }
 
     private fun deleteUser() {
