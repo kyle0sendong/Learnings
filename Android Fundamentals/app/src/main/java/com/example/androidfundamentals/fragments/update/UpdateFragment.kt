@@ -64,17 +64,6 @@ class UpdateFragment : Fragment(), MenuProvider {
         return false
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.delete_menu) {
-            deleteUser()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun deleteUser() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Yes") { _, _ ->
