@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,9 +17,9 @@ import com.example.androidfundamentals.R
 import com.example.androidfundamentals.databinding.FragmentUpdateBinding
 import com.example.androidfundamentals.model.User
 import com.example.androidfundamentals.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.fragment_update.*
 
-class UpdateFragment : Fragment() {
+
+class UpdateFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentUpdateBinding? = null
     private val binding get() = _binding!!
@@ -42,22 +44,35 @@ class UpdateFragment : Fragment() {
             updateItem()
         }
 
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Add menu items here
-                menuInflater.inflate(R.menu.delete_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                if(menuItem.itemId ==  R.id.menu_delete) {
-                    deleteUser()
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activity?.addMenuProvider(this, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        if(menuItem.itemId ==  R.id.delete_menu) {
+            deleteUser()
+            return true
+        }
+        return false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete_menu) {
+            deleteUser()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun deleteUser() {
@@ -76,11 +91,6 @@ class UpdateFragment : Fragment() {
         builder.create().show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun updateItem(){
         val firstName = binding.roomUpdateAge.text.toString()
         val lastName = binding.roomUpdateLname.text.toString()
@@ -97,4 +107,10 @@ class UpdateFragment : Fragment() {
     private fun checkInput(fname: String, lname: String, age: String): Boolean {
         return !(fname.isEmpty() && lname.isEmpty() && age.isEmpty())
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
