@@ -1,6 +1,7 @@
 package com.example.androidfundamentals.samplePackageManager
 
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -36,11 +37,15 @@ class SamplePackageManager : AppCompatActivity() {
         // Loop through the list of resolved activities and their application info
         if (resolveInfoList != null) {
             for (resolveInfo in resolveInfoList) {
-                val packageName = resolveInfo.activityInfo.packageName
-                val applicationInfo = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
 
-                val appInfo = AppInfo(packageName, applicationInfo)
-                testList.add(appInfo)
+                // Filter application based on type
+                if (resolveInfo.activityInfo.applicationInfo.category and ApplicationInfo.CATEGORY_SOCIAL == 0) {
+                    val packageName = resolveInfo.activityInfo.packageName
+                    val applicationInfo = packageManager.getApplicationLabel(resolveInfo.activityInfo.applicationInfo).toString()
+                    val appInfo = AppInfo(packageName, applicationInfo)
+                    testList.add(appInfo)
+                }
+
             }
         }
 
