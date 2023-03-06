@@ -34,7 +34,7 @@ class TodoAdapter(var todos: List<Todo>): RecyclerView.Adapter<TodoAdapter.ToDoV
     }
 
     override fun getItemCount(): Int {
-        return  todos.size
+        return todos.size
     }
 
 }

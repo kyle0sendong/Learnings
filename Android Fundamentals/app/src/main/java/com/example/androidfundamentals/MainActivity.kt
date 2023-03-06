@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.androidfundamentals.databinding.ActivityMainBinding
+import com.example.androidfundamentals.samplePackageManager.SamplePackageManager
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -58,6 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.capturePhoto.setOnClickListener{
             Intent(this, CapturePhoto::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.samplePackageManager.setOnClickListener{
+            Intent(this, SamplePackageManager::class.java).also {
                 startActivity(it)
             }
         }
