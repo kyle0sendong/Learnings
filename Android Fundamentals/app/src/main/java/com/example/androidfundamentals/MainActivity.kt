@@ -1,15 +1,14 @@
 package com.example.androidfundamentals
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.usage.UsageStatsManager
-import android.content.ContentValues
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.accessibility.AccessibilityManager
 import com.example.androidfundamentals.databinding.ActivityMainBinding
 import com.example.androidfundamentals.samplePackageManager.SamplePackageManager
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,10 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         // Sample finding error/debug in LogCat Log.d = log debug, log.e -> log error etc.
         Log.d("Sample", "Hallo")
+        checkAccessibilityPermission()
 
-        Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).also {
-            startActivity(it)
-        }
 
         binding.sampleLayout.setOnClickListener {
             Intent(this, SampleLayout::class.java).also {
@@ -85,23 +82,34 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    private fun checkAccessibilityPermission() {
+        val accessibilityManager = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+        val isAccessibilityEnabled = accessibilityManager.isEnabled
 
-        val currentTime = System.currentTimeMillis()
-
-        val stats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, currentTime - 1000 * 10, currentTime)
-
-        if (stats != null) {
-            stats.sortedByDescending { it.lastTimeUsed }.firstOrNull()?.let {
-                val packageName = it.packageName
-                val appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)).toString()
-                binding.testview.text = "User opened app: $appName ($packageName)"
-                Log.d(ContentValues.TAG, "User opened app: $appName ($packageName)")
+        if (!isAccessibilityEnabled) {
+            Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).also {
+                startActivity(it)
             }
         }
     }
+
+//    override fun onStop() {
+//        super.onStop()
+//        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+//
+//        val currentTime = System.currentTimeMillis()
+//
+//        val stats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, currentTime - 1000 * 10, currentTime)
+//
+//        if (stats != null) {
+//            stats.sortedByDescending { it.lastTimeUsed }.firstOrNull()?.let {
+//                val packageName = it.packageName
+//                val appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)).toString()
+//                binding.testview.text = "User opened app: $appName ($packageName)"
+//                Log.d(ContentValues.TAG, "User opened app: $appName ($packageName)")
+//            }
+//        }
+//    }
 
     //Overriding life cycle of activity
     // onCreate() -> onStart() -> onResume()
