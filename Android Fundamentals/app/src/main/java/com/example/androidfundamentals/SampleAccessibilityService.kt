@@ -2,8 +2,14 @@ package com.example.androidfundamentals
 
 import android.accessibilityservice.AccessibilityService
 import android.accessibilityservice.AccessibilityServiceInfo
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.PixelFormat
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 
 class SampleAccessibilityService : AccessibilityService() {
@@ -16,14 +22,29 @@ class SampleAccessibilityService : AccessibilityService() {
 
             val packageName = event.packageName.toString()
 
-            // Triggering only once
-            if (previousPackageName != packageName) {
+            // Triggering only once, for whitelisted apps
+            if (previousPackageName == packageName) {
                 previousPackageName = packageName
                 val pm = applicationContext.packageManager
                 val appInfo = pm.getPackageInfo(packageName, PackageManager.GET_META_DATA)
                 val appName = appInfo.applicationInfo.loadLabel(pm).toString()
                 Log.d("09107465182", "$appName to foreground")
+
+                val intent = Intent(this, BlockScreen::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
             }
+
+            // For blocklisted apps test
+            previousPackageName = packageName
+            val pm = applicationContext.packageManager
+            val appInfo = pm.getPackageInfo(packageName, PackageManager.GET_META_DATA)
+            val appName = appInfo.applicationInfo.loadLabel(pm).toString()
+            Log.d("09107465182", "$appName to foreground")
+
+            val intent = Intent(this, BlockScreen::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 
@@ -38,7 +59,6 @@ class SampleAccessibilityService : AccessibilityService() {
         metadata.packageNames = packageNames.toTypedArray()
         serviceInfo = metadata
     }
-
 
     override fun onInterrupt() {
         TODO("Not yet implemented")

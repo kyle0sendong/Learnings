@@ -1,17 +1,22 @@
 package com.example.androidfundamentals
 
+import android.Manifest.permission.KILL_BACKGROUND_PROCESSES
 import android.accessibilityservice.AccessibilityServiceInfo
 import android.app.usage.UsageStatsManager
 import android.content.*
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityManager
+import androidx.core.content.ContextCompat
 import com.example.androidfundamentals.databinding.ActivityMainBinding
 import com.example.androidfundamentals.samplePackageManager.SamplePackageManager
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,14 +28,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Broadcasting
         val intentFilter = IntentFilter(Intent.ACTION_USER_BACKGROUND)
         val receiver = SampleBroadCastReceiver()
         registerReceiver(receiver, intentFilter)
 
-        // Sample finding error/debug in LogCat Log.d = log debug, log.e -> log error etc.
-        Log.d("Sample", "Hallo")
+        // Check if accessibility service is enabled
         checkAccessibilityPermission()
-
 
         binding.sampleLayout.setOnClickListener {
             Intent(this, SampleLayout::class.java).also {
@@ -93,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // This code is for testing the last opened application
 //    override fun onStop() {
 //        super.onStop()
 //        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
