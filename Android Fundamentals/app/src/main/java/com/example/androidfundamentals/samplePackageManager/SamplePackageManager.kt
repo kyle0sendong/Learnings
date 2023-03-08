@@ -1,11 +1,15 @@
 package com.example.androidfundamentals.samplePackageManager
 
+import android.app.usage.UsageStatsManager
+import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidfundamentals.R
@@ -16,7 +20,6 @@ class SamplePackageManager : AppCompatActivity() {
 
     private lateinit var binding: ActivitySamplePackageManagerBinding
 
-    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivitySamplePackageManagerBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -48,6 +51,8 @@ class SamplePackageManager : AppCompatActivity() {
 
             }
         }
+
+
 
         val adapter = AppInfoAdapter(testList)
         binding.rvAllApplication.adapter = adapter

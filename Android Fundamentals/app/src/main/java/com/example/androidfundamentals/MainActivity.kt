@@ -1,8 +1,14 @@
 package com.example.androidfundamentals
 
+import android.app.usage.UsageStatsManager
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import com.example.androidfundamentals.databinding.ActivityMainBinding
 import com.example.androidfundamentals.samplePackageManager.SamplePackageManager
@@ -18,8 +24,16 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val intentFilter = IntentFilter(Intent.ACTION_USER_BACKGROUND)
+        val receiver = SampleBroadCastReceiver()
+        registerReceiver(receiver, intentFilter)
+
         // Sample finding error/debug in LogCat Log.d = log debug, log.e -> log error etc.
         Log.d("Sample", "Hallo")
+
+        Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS).also {
+            startActivity(it)
+        }
 
         binding.sampleLayout.setOnClickListener {
             Intent(this, SampleLayout::class.java).also {
@@ -66,6 +80,25 @@ class MainActivity : AppCompatActivity() {
         binding.samplePackageManager.setOnClickListener{
             Intent(this, SamplePackageManager::class.java).also {
                 startActivity(it)
+            }
+        }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val usageStatsManager = getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+
+        val currentTime = System.currentTimeMillis()
+
+        val stats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, currentTime - 1000 * 10, currentTime)
+
+        if (stats != null) {
+            stats.sortedByDescending { it.lastTimeUsed }.firstOrNull()?.let {
+                val packageName = it.packageName
+                val appName = packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)).toString()
+                binding.testview.text = "User opened app: $appName ($packageName)"
+                Log.d(ContentValues.TAG, "User opened app: $appName ($packageName)")
             }
         }
     }
