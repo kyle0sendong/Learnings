@@ -43,9 +43,10 @@ def backtest_yearly(start_year, end_year, ticker_name, timeframe):
 
             _close = df['close']
             _low = df['low']
-            _open = df['open']  # For entry price, shift
+            _open = df['open']
             _high = df['high']
             _hl2 = hl2(df)
+            _sar_up, _sar_down = psar(df, 0.02, 0.2)
 
             rma50 = rma(_hl2, 200)
 
@@ -64,16 +65,16 @@ def backtest_yearly(start_year, end_year, ticker_name, timeframe):
             in_trade = False
 
             i = 1
-            while i < (len(_open) - 1):
+            while i < (len(_open)-1):
 
                 # Entry conditions
-                condition1 = tsi_values1.iloc[i - 1] <= tsi_signal1.iloc[i - 1]
+                condition1 = tsi_values1.iloc[i-1] <= tsi_signal1.iloc[i-1]
                 condition2 = tsi_values1.iloc[i] > tsi_signal1.iloc[i]
                 condition3 = tsi_signal2.iloc[i] > -5
                 condition4 = _close.iloc[i] > rma50.iloc[i]
-                entry = condition1 & condition2 & condition3 & condition4
+                entry = (condition1 & condition2) & condition3 & condition4
 
-                leverage = 400
+                leverage = 200
                 risk = (account_size * 0.05)
                 position_size = round((risk * leverage) / 100) * 100
                 risk = position_size / leverage
@@ -82,9 +83,14 @@ def backtest_yearly(start_year, end_year, ticker_name, timeframe):
                 if entry & (not in_trade):
                     trades += 1
                     in_trade = True
-                    entry_price = _open.iloc[i + 1]
+                    entry_price = _open.iloc[i+1]
 
-                    stoploss = entry_price - _atr_stoploss.iloc[i]
+                    if _sar_up.iloc[i] > 0:
+                        stoploss = _sar_up.iloc[i]
+                    else:
+                        stoploss = entry_price - (_atr_stoploss.iloc[i] * 2)
+
+                    # print(f'Entry Price: {entry_price}. Account Size: {account_size}. Stoploss. {stoploss}')
 
                 # Opened trade
                 if in_trade:
@@ -106,14 +112,16 @@ def backtest_yearly(start_year, end_year, ticker_name, timeframe):
                         if profit < 0:
                             account_size -= abs(profit)
 
+                        # print(f'Exit. Account Size: {account_size}. Exit Price: {exit_price}. Profit: {profit}. Stoploss: {stoploss}\n')
                     else:
 
                         # Adjust stop loss
-                        temp_stoploss1 = _close.iloc[i - 1] - _atr_stoploss.iloc[i - 1]
-                        temp_stoploss2 = _close.iloc[i] - _atr_stoploss.iloc[i]
+                        temp_stoploss = _sar_up.iloc[i]
 
-                        if temp_stoploss2 > temp_stoploss1:
-                            stoploss = temp_stoploss2
+                        if temp_stoploss > stoploss:
+                            stoploss = temp_stoploss
+
+                        # print(f'Adjust Stoploss. Current Price. {_close.iloc[i]}. Stoploss. {stoploss}')
 
                 i += 1
 
@@ -140,6 +148,7 @@ def backtest_monthly(start_year, end_year, ticker_name, timeframe):
                 _open = df['open']  # For entry price, shift
                 _high = df['high']
                 _hl2 = hl2(df)
+                _sar_up, _sar_down = psar(df, 0.02, 0.2)
 
                 rma50 = rma(_hl2, 200)
 
@@ -178,7 +187,10 @@ def backtest_monthly(start_year, end_year, ticker_name, timeframe):
                         in_trade = True
                         entry_price = _open.iloc[i + 1]
 
-                        stoploss = entry_price - _atr_stoploss.iloc[i]
+                        if _sar_up.iloc[i] > 0:
+                            stoploss = _sar_up.iloc[i]
+                        else:
+                            stoploss = entry_price - (_atr_stoploss.iloc[i]*2)
 
                     # Opened trade
                     if in_trade:
@@ -236,6 +248,7 @@ def backtest_daily(start_year, end_year, ticker_name, timeframe):
                     _open = df['open']  # For entry price, shift
                     _high = df['high']
                     _hl2 = hl2(df)
+                    _sar_up, _sar_down = psar(df, 0.02, 0.2)
 
                     rma50 = rma(_hl2, 200)
 
@@ -275,7 +288,10 @@ def backtest_daily(start_year, end_year, ticker_name, timeframe):
                             in_trade = True
                             entry_price = _open.iloc[i + 1]
 
-                            stoploss = entry_price - _atr_stoploss.iloc[i]
+                            if _sar_up.iloc[i] > 0:
+                                stoploss = _sar_up.iloc[i]
+                            else:
+                                stoploss = entry_price - (_atr_stoploss.iloc[i] * 2)
 
                         # Opened trade
                         if in_trade:
@@ -314,4 +330,4 @@ def backtest_daily(start_year, end_year, ticker_name, timeframe):
                     continue
 
 
-backtest_yearly(2019, 2023, 'EURUSD#', mt5.TIMEFRAME_M15)
+backtest_yearly(2007, 2023, 'EURUSD#', mt5.TIMEFRAME_H1)
