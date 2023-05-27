@@ -2,10 +2,9 @@
 
 from mt5.connect import *
 from indicators.ta import *
-from datetime import datetime
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 1000)
@@ -15,15 +14,17 @@ def main():
     year = ['2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019',
             '2020', '2021', '2022']
 
+    total_profit = 0
+    total_savings = 0
+    total_account_size = 0
+    total_money_used = 0
+
     for num in range(len(year)):
-        df = pd.read_csv('./data/eurusd/H1/'+str(year[num])+'.csv')
+        df = pd.read_csv('./data/eurusd/H1/' + str(year[num]) + '.csv')
 
         # Technical Indicators
         hl2_price = hl2(df)
-        sma40_length = 400
-
-        rma2_length = 2
-        rma6_length = 6
+        sma_length = 40
 
         tsi_slow = 12
         tsi_fast = 26
@@ -37,25 +38,21 @@ def main():
 
         atr_length = 5
 
-        sma40 = rma(df['close'], sma40_length)
-        rma2 = rma(df['close'], rma2_length)
-        rma6 = rma(df['close'], rma6_length)
+        sma40 = rma(df['close'], sma_length)
+        rma2 = rma(df['close'], 2)
+        rma6 = rma(df['close'], 6)
         tsi_values, tsi_signal = tsi_mod(hl2_price, tsi_slow, tsi_fast, tsi_smooth)
         sar_up, sar_down = psar(df['high'], df['low'], df['close'], sar_increment, sar_maximum)
         coral_up, coral_down = coral(df['close'], coral_length, coral_multiplier)
         atr5 = atr(df['high'], df['low'], df['close'], atr_length)
 
         # Long Entry Conditions
-        long_condition1 = (coral_up is not None) | ((coral_up is None) & (sar_up is not None))
+        long_condition1 = (coral_up is not None) | (coral_up is None)
         long_condition2 = rma2 > rma6
         long_condition3 = sar_up is not None
         long_condition4 = tsi_values > tsi_signal
         long_condition5 = df['close'] >= sma40
-        entry1 = long_condition1 & long_condition2 & long_condition3 & long_condition4
-
-        # Long Entry Conditions
-        long_condition2 = df.close > sma40
-        entry2 = long_condition1 & long_condition2 & long_condition3 & long_condition4
+        entry1 = long_condition1 & long_condition2 & long_condition3 & long_condition4 & long_condition5
 
         # Buy entries
         buy = entry1.astype(float)
@@ -78,11 +75,12 @@ def main():
         atr5_entry = (df['atr5_entry'].dropna()).reset_index(drop=True)
 
         # To calculate how much loss or profit has been made in each trade.
-        profits = ((close_trades - open_trades)/open_trades) * 100
+        profits = ((close_trades - open_trades) / open_trades) * 100
         profits = profits.fillna(0)
 
         # Risk management
         initial_size = 1000.0
+        total_money_used += initial_size
         account_size = initial_size
         risk_per_trade = 0.02
 
@@ -96,30 +94,38 @@ def main():
         for i in range(len(open_trades)):
 
             stop_loss_position = low_entry[i] - (atr5_entry[i] * 2)
-            stop_loss_percentage = (open_trades[i]-stop_loss_position) / open_trades[i]
-            position_size = (account_size*risk_per_trade) / abs(stop_loss_percentage*10)
+            stop_loss_percentage = (open_trades[i] - stop_loss_position) / open_trades[i]
+            position_size = (account_size * 0.04) * 50
 
-            if position_size > (account_size / 4):
-                position_size = account_size / 4
-
-            account_size = account_size + (position_size*profits[i])
+            account_size = account_size + ((position_size / 50) * profits[i])
 
             if profits[i] > 0:
                 win = win + 1
-                temp_savings = (position_size * profits[i]) * 0.2  # save 10% of every win
+                temp_savings = ((position_size / 50) * profits[i]) * 0.2  # save 10% of every win
                 savings += temp_savings
                 account_size -= temp_savings
 
             if account_size > maximum_profit:
-                maximum_profit = account_size
+                maximum_profit = account_size - initial_size
+
+        total_profit += (account_size - initial_size)
+        total_savings += savings
+        total_account_size += account_size + savings
 
         print(f'{year[num]}')
         print(f'Account Size: ${account_size:.2f}')
         print(f'Total Savings: ${savings}')
         print(f'potential profit: ${maximum_profit:.2f}')
-        print(f'win rate: {win/num_trades * 100}%')
+        print(f'win rate: {win / num_trades * 100}%')
         print(f'number of trades: {num_trades}')
         print(f'Total Profit : {(account_size + savings) - initial_size}\n\n')
+
+    print(f'Overall Total Profit: {total_profit}')
+    print(f'Overall Total Savings: {total_savings}')
+    print(f'Overall Total Money Used: {total_money_used}')
+    print(f'Overall Total Account Size: {total_account_size}')
+    print(f'Overall Total Money Left: {total_account_size - total_money_used}')
+
 
     """
     Todo: 

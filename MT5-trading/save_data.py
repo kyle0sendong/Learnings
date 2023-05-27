@@ -5,7 +5,6 @@ from datetime import datetime
 import pandas as pd
 from pathlib import Path
 import calendar
-import shutil
 
 
 def get_timeframe_string(timeframe):
