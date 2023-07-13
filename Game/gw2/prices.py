@@ -4,12 +4,12 @@ from selenium.webdriver.chrome.service import Service
 import time
 
 
-def load_website():
+def load_website(url):
     chrome_driver_path = 'C:/Program Files/Google/Chrome/Application/chromedriver.exe'
     service = Service(chrome_driver_path)
 
     driver = webdriver.Chrome(service=service)
-    driver.get('https://www.gw2tp.com/item/19722-elder-wood-log')
+    driver.get(url)
 
     time.sleep(10)
     html_content = driver.page_source

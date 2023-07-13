@@ -1,4 +1,5 @@
 from Game.gw2.functions.tp_functions import *
+from prices import *
 
 tp_icon_pos = [21, 161]
 tp_home_icon_pos = [248, 70, 306, 111]
@@ -9,13 +10,12 @@ item_trade_pos = [366, 333, 458, 347]
 quantity_pos = [287, 192]
 price_pos = [404, 223]
 place_order_pos = [306, 287]
-success_pos = [445, 192, 471, 211]
+success_color_pos = [445, 192, 471, 211]
 ok_pos = [318, 291]
-close_pos = [672, 45]
+close_tp_pos = [672, 45]
 
 
 def buy(item_name, quantity, price):
-
     open_tp()
 
     time.sleep(2)
@@ -55,7 +55,7 @@ def buy(item_name, quantity, price):
                     pyautogui.click(place_order_pos[0], place_order_pos[1])
                     time.sleep(0.2)
 
-                    success = is_image_found(success_pos, './screenshots/success.png', 15000, False)
+                    success = is_image_found(success_color_pos, './screenshots/success.png', 15000, False)
 
                     if success:
                         time.sleep(0.5)
@@ -63,12 +63,16 @@ def buy(item_name, quantity, price):
 
                 # Close TP
                 time.sleep(3)
-                pyautogui.click(close_pos[0], close_pos[1])
+                pyautogui.click(close_tp_pos[0], close_tp_pos[1])
 
                 break
 
 
-buy('piece of common unidentified gear', 5, '82')
+# Specific buy order for unidentified gears
+def get_uni_price(url):
+    load_website(url)
 
-# save_image(success_pos[0], success_pos[1], success_pos[2], success_pos[3], './screenshots/success.png')
-# item_trade_opened = is_image_found(success_pos, './screenshots/success.png', 10000, False)
+
+common_uni = 'https://www.gw2tp.com/item/85016-piece-of-common-unidentified-gear'
+
+buy('piece of common unidentified gear', 5, '82')
