@@ -1,0 +1,15 @@
+csv input file must have headers
+
+tl must be the first header
+en is the destination language
+
+tl, en,
+input,
+input,
+etc,
+
+to run using cmd,
+- MUST BE CONNECTED TO THE INTERNET -
+1. cd to source file
+2. enter 'python translate inputfile.csv outputfile.csv'
+

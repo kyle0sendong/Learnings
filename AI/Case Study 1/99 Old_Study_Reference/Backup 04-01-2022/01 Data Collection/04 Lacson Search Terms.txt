@@ -1,0 +1,21 @@
+
+search_terms = [
+    '#pinglacson',
+    '#lacson',
+    '#PingLacsonForPresident',
+    '#PingLacsonForPresident2022',
+    '#5PresidentePingLacson',
+    '#PingLacson2022',
+    '#PingGaling',
+    '#PingGaling2022',
+    '#PingDigmaan', 
+    '#PingDigmaan2022', 
+    '#WeNeedALeader',
+    '#SinongPangGiyeraMo',
+    '#SinongPangGiyeraMo2022',
+    '#TeamLacsonSotto'
+    '#TeamLacsonSotto2022'
+    '#LacsonSottoPanaloTayo',
+    '#LacsonSottoTayo',
+    '#TuloyAngLaban'
+    ]

@@ -1,0 +1,5 @@
+removed symbols
+removed white space
+removed leading/trailing white space
+removed emojis
+removed empty tweets

@@ -1,0 +1,2 @@
+-Remove duplicates using excel
+-Manually classify positive and negative words and save on notepad

@@ -1,0 +1,2 @@
+Open Tweet_Miner.py
+read code documentation

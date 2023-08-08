@@ -1,0 +1,26 @@
+Manual Annotating or Assigning Polarity
+
+25.2% of the Data Set is selected using simple random sampling for manual assignment of polarity. 20% is selected as the basis and the additional 5.2% will act as a buffer when the selected dataset is cleaned to preserve an estimated 20% base dataset for the training and testing dataset.
+
+The idea of the additional 5% is due to the fact that an average of 25% is removed from the complete data set after cleaning. It is expected that similar scenario will play out after cleaning the selected training and testing data set.
+
+BBM
+11,119 raw
+8,137 preprocessed
+2,982 removed
+26.82% removed
+
+ISKO
+3,566 raw
+2,665 preprocessed
+901 removed
+25.27% removed
+
+LENI
+27,513 raw
+20,257 preprocessed
+7,256 removed
+26.37%
+
+
+average of 26.15% removed after preprocessing

@@ -1,0 +1,5 @@
+-Removed emojis
+-Converted non-ascii chars to corresponding letter
+-Removed symbols
+-Removed extra spaces
+-Removed empty tweet

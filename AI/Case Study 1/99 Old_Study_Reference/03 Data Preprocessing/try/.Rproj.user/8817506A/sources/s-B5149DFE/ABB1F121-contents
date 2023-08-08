@@ -1,0 +1,112 @@
+install.packages("tm")
+install.packages("wordcloud")
+install.packages("stringr")
+install.packages("syuzhet")
+install.packages("tidytext")
+install.packages("tidyverse")
+install.packages("ggplot2")
+
+
+library(tm)
+library(wordcloud)
+library(stringr) 
+library(syuzhet)
+library(ggplot2)
+library(tidyverse)
+library(tidytext)
+
+#set directory
+getwd()
+
+#import csv file
+tweets <- read.csv(file.choose(), stringsAsFactors = FALSE)
+review <- as.character(tweets$tweet)
+review
+
+#build corpus
+library(tm)
+corpus <- iconv(tweets$tweet, to = "utf-8")
+corpus <- Corpus(VectorSource(corpus))
+inspect(corpus[1:5])
+
+
+#term document matrix
+tdm <- TermDocumentMatrix(corpus)
+tdm
+tdm <- as.matrix(tdm)
+inspect(tdm[1:10, 1:20])
+
+# Sort by decreasing value of frequency
+tdm <- sort(rowSums(tdm),decreasing=TRUE)
+tdm <- data.frame(word = names(tdm),freq=tdm)
+
+# Display the top 20 most frequent words
+head(tdm, 20)
+
+
+# Plot the most frequent words
+barplot(tdm[1:20,]$freq, las = 2, names.arg = tdm[1:20,]$word,
+        col ="blue", main ="Top 20 Most Frequent Words (Isko)",
+        ylab = "Word frequencies")
+
+#generate word cloud
+set.seed(1234)
+wordcloud(words = tdm$word, freq = tdm$freq, min.freq = 5,
+          max.words=100, random.order=FALSE, rot.per=0.40, 
+          colors=brewer.pal(8, "Dark2"))
+
+#Bar plot for random words
+w <- rowSums(tdm)
+w <- subset(w, w>=20)
+barplot(w,
+        las = 2,
+        col = rainbow(50))
+
+#Sentiment Analysis 
+#Lexicon-based Approach
+#obtain sentiment scores
+get_nrc_sentiment("happy")
+get_nrc_sentiment("excitement")
+get_nrc_sentiment("dumb")
+
+s <- get_nrc_sentiment(review)
+
+#combine text and sentiment column
+review_sentiment<-cbind(tweets$tweet,s)
+table(review_sentiment['positive'])
+
+
+#Analyze sentiments using the syuzhet package based on the NRC sentiment dictionary
+emotions <- get_nrc_sentiment(tweets$tweet)
+emo_bar <- colSums(emotions)
+emo_sum <- data.frame(count=emo_bar, emotions=names(emo_bar))
+
+#calculating sentiments using function calculate_sentiment.
+
+head(emotions,10)
+
+#Bar plot for sentiment scores
+barplot(colSums(s), col = rainbow(10), ylab = 'count', main = 'Sentiment Results (leni)')
+
+
+#Plot the count of words associated with 8 emotions, expressed as a percentage
+barplot(
+  sort(colSums(prop.table(s[, 1:8]))), 
+  horiz = TRUE, 
+  cex.names = 0.7, 
+  las = 1, 
+  main = "Emotion in Text (Leni)", xlab="Percentage"
+)
+
+
+#Plot the count of words associated with each sentiment, expressed as a percentage
+barplot(
+  sort(colSums(prop.table(s[, 9:10]))), 
+  horiz = TRUE, 
+  cex.names = 0.7, 
+  las = 1, 
+  col = rainbow(5),
+  main ="Leni", xlab="Percentage")
+
+
+

@@ -1,0 +1,2 @@
+Removed duplicates
+Removed unused attributes

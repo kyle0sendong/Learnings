@@ -1,0 +1,2 @@
+-Stem english words
+-Apply basic clean

@@ -1,0 +1,5 @@
+-Remove english stopwords
+-Remove custom filipino stopwords
+-Remove extra numbers
+-Remove laughs pattern
+-Other basic clean such as extra white space

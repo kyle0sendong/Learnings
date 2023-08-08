@@ -1,0 +1,7 @@
+-removed url
+-removed mentions
+-removed hashtags
+-removed punctuation
+-removed retweets
+-replaced newline
+-converted to lowercase

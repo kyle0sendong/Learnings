@@ -1,0 +1,14 @@
+-removed url
+-removed mentions
+-removed hashtags
+-removed punctuation
+-removed retweets
+-replaced newline
+-converted to lowercase
+-removed repeated characters
+
+-Removed emojis
+-Converted non-ascii characters to corresponding letter
+-Removed symbols
+-Removed extra spaces
+-Removed empty tweet

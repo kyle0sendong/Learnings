@@ -1,0 +1,13 @@
+
+search_terms = [
+'#MannyPacquiao',
+'#Pacquiao', 
+'#presidentmanny',
+'#MannyLito',
+'#ForGodAndCountry',
+'#PanaloAngMahirap',
+'#PanaloAngPilipino'
+'#mptayo',
+'#mannypacquiaotayo',
+'#MannyPacquiaoChristianSupporter'
+]

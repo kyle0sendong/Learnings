@@ -1,0 +1,8 @@
+-Amount of informal texts.
+-Google Translate API takes long time to process large dataset
+-Meaning of tweet lost due to translation errors from different dialects of Filipino such as bicol, bisaya, batangueno etc.
+-Amount of spelling errors, noise from repeated letters are ignored.
+
+
+
+-After cleaning, the result is still the same. Translation leads to error, it is better to translate unknown lexicon.

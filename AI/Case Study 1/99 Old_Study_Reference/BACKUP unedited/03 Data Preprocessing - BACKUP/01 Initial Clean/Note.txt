@@ -1,0 +1,2 @@
+Removed Irrelevant attributes
+Removed duplicates first level
