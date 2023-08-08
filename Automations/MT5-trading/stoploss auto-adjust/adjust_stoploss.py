@@ -28,8 +28,8 @@ def adjust_stoploss(ticket, symbol, new_stop_loss):
 def main():
     # Connect account
     mt5.initialize()
-    login = 65813096
-    password = 'maskinanO1'
+    login = 67382391
+    password = 'password'
     server = 'XMGlobal-MT5 2'
     mt5.login(login, password, server)
 
@@ -39,19 +39,21 @@ def main():
     while True:
 
         for order in orders:
-            print(f'{order.symbol}')
-            current_date = datetime.now()
+            print(f'\nSymbol: {order.symbol}')
+            print(f'Entry Price: {order.price_open}')
+            current_date = datetime.now() + timedelta(days=2)
             one_month_ago = current_date - timedelta(days=30)
 
-            df = pd.DataFrame(mt5.copy_rates_range(order.symbol, mt5.TIMEFRAME_M15, one_month_ago, current_date))
-            atr = average_true_range(df['high'], df['low'], df['close'], 50) * 2
-            length = len(atr) - 1
+            df = pd.DataFrame(mt5.copy_rates_range(order.symbol, mt5.TIMEFRAME_H4, one_month_ago, current_date))
+            atr = average_true_range(df['high'], df['low'], df['close'], 5) * 1.5
+            length = len(atr) - 2
 
             new_sl = 0.0
             order_sl = order.sl
+
             if order.type == 0:
 
-                sar = psar_up(df['high'], df['low'], df['close'], 0.01, 0.4)
+                sar = psar_up(df['high'], df['low'], df['close'], 0.06, 0.35)
 
                 atr_sl = df['low'].iloc[length] - atr.iloc[length]
                 sar_sl = sar.iloc[length]
@@ -68,23 +70,19 @@ def main():
                 if atr_sl > sar_sl:
                     if atr_sl > order_sl:
                         new_sl = atr_sl
-
                 elif sar_sl > atr_sl:
                     if sar_sl > order_sl:
                         new_sl = sar_sl
 
-                print(new_sl)
-
             elif order.type == 1:
-                sar = psar_down(df['high'], df['low'], df['close'], 0.01, 0.4)
+                sar = psar_down(df['high'], df['low'], df['close'], 0.06, 0.035)
                 atr_sl = atr.iloc[length] + df['high'].iloc[length]
                 sar_sl = sar.iloc[length]
-
                 print(f'ATR SL: {atr_sl}')
                 print(f'SAR SL: {sar_sl}')
 
                 if np.isnan(sar_sl):
-                    sar_sl = atr_sl
+                    sar_sl = 99999999
 
                 if order_sl == 0:  # Initialize order stop loss if it has not been set
                     order_sl = 99999999
@@ -92,7 +90,6 @@ def main():
                 if atr_sl <= sar_sl:
                     if atr_sl < order_sl:
                         new_sl = atr_sl
-
                 elif sar_sl < atr_sl:
                     if sar_sl < order_sl:
                         new_sl = sar_sl
@@ -104,7 +101,7 @@ def main():
 
             print()
 
-        seconds = 900
+        seconds = 10000
         print(f'Sleep for {seconds} seconds')
         time.sleep(seconds)
         print('Continue Setting Stop Loss.\n')
