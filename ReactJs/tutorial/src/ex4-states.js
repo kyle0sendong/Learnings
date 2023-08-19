@@ -34,7 +34,7 @@ function Ex4() {
 
     return(
         <div>
-            <h2>Example 4 - States</h2>
+            <h2>Chapter 4 - States</h2>
             <div className="App">
                 <p>{age}</p>
                 <button onClick={increaseAge}>Increase Age!</button>
@@ -51,7 +51,7 @@ function Ex4() {
 
             </div>
 
-            <h3>Example 4 exercise</h3>
+            <h3>Chapter 4 exercise</h3>
             <div className="App">
                 <h3>{value}</h3>
                 <button onClick={increaseValue}>Increase</button>

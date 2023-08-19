@@ -1,7 +1,7 @@
-import './App.css';
-import {User} from './User.js'
-import { GasPlanet } from './Planets';
-import {useState} from "react"
+import "./App.css";
+import { User } from "./components/User.js"
+import { GasPlanet } from "./components/Planets";
+import { useState } from "react"
 
 function Ex3() {
   const age = 20

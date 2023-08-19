@@ -6,7 +6,9 @@ import Ex3 from './ex3-ternary-lists-import';
 import Ex4 from './ex4-states';
 import Ex5 from './ex5-CRUD';
 import Ex6 from './ex6-lifecycle';
-import Ex7 from './ex7-api'
+import Ex7 from './ex7-api';
+import Ex8 from './ex8-router-dom';
+import Ex9 from './ex9';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,5 +20,7 @@ root.render(
     <Ex5 />
     <Ex6 />
     <Ex7 />
+    <Ex8 />
+    <Ex9 />
   </React.StrictMode>
 );

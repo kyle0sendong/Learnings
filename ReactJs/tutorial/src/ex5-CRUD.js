@@ -1,6 +1,6 @@
-import './App.css';
-import {useState} from "react";
-import {Todo} from './Todo.js';
+import "./App.css";
+import { useState } from "react";
+import { Todo } from "./components/Todo.js";
 
 function Ex5() {
 
@@ -41,7 +41,7 @@ function Ex5() {
     return (
         <div>
 
-            <h3>Example 5: CRUD - todo list</h3>
+            <h3>Chapter 5: CRUD - todo list</h3>
 
             <div> 
                 <input type="text" placeholder="Add Todo Here" onChange={inputChange}></input>

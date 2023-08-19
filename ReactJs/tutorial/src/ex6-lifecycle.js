@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import {Text} from "./ex6-Text";
+import {Text} from "./components/Text";
 
 function Ex6() {
     const [showText, setShowText] = useState(false);

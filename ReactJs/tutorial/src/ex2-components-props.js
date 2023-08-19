@@ -1,9 +1,9 @@
-import './App.css';
+import "./App.css";
 
 function Ex2() {
   return (
     <div>
-      <h2>Example 2: Components and Props</h2>
+      <h2>Chapter 2: Components and Props</h2>
       <div className="App">
         <Job salary="29,000" position="Junior SDE" company="Amazon"/>
         <Job salary="35,000" position="SDE" company="Google"/>
